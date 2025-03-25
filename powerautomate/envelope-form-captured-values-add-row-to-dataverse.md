@@ -28,7 +28,7 @@ Automation simplifies this process by:
 
 * Automatically sending contracts upon form submission.
 * Using templates pre-filled with employee details.
-* Using the Signatureapi form to capture the data and then add a row to a Dataverse table.
+* Using the Signatureapi form to capture data from the signature process and then add a row to a Dataverse table.
 * Tracking signature status and storing documents automatically.
 * Informing HR instantly once contracts are signed.
 
@@ -37,7 +37,7 @@ Automation simplifies this process by:
 Before starting, make sure you have:
 
 * **Power Automate** – To build workflows.
-* **SignatureAPI account** – For electronic signatures.
+* **SignatureAPI account** – For electronic signatures with form inputs.
 * **Microsoft Forms** – For collecting employee information.
 * **OneDrive** – For storing your DOCX templates.
 * **Microsoft Dataverse** – For storing the employee details from the form and signature completion.
@@ -51,7 +51,7 @@ The automation process follows these steps:
 2. **Data Retrieval:** Get employee details and fetch the contract template from OneDrive.
 3. **Signature Process:** Create an envelope via SignatureAPI, add recipient details, and attach the DOCX.
 4. **Monitoring:** Wait for the contract to be signed.
-5. **Storage & Notification:** Save the signed document in OneDrive, add a row to a dataverse table and notify HR via email.
+5. **Storage & Notification:** Save the signed document in OneDrive, add a row to a Dataverse table and notify HR via email.
 
 Here’s what your final Power Automate flow will look like:
 
@@ -199,7 +199,7 @@ Now, attach your contract template to the envelope and populate it with employee
 1. Add **"Add a Template – DOCX"** action.
 2. Select **File Content** from the OneDrive action.
 3. Set the **Document Title** (e.g., "Employment Contract").
-4. Ensure your DOCX template uses placeholders (`{{employee.name}}`, etc.) and map each field to the corresponding dynamic content from your form.
+4. Ensure your DOCX template uses placeholders (`{{employee.first_name}}`, `{{employee.last_name}}`, `{{employee.email}}`, etc.) and map each field to the corresponding dynamic content from your form.
 
 > *Include annotated screenshot demonstrating dynamic content mappings.*
 
@@ -219,7 +219,7 @@ Specify where the employee should sign on the document.
 
 1. Add **"Add a Place – Text Input"** action and rename it to **"Add a Place – Employee Salary"**.
 2. Use the placeholder (e.g., `[[employee_salary]]`) from your DOCX template.
-3. Ensure the recipient key to be the one from the employer, this will ensure that the salary amount is defined by the employer.
+3. Ensure the recipient key to be the one from the employer, this will ensure that the salary amount is defined and completed in the signature process by the employer.
 4. From the advanced parameters, set the **"Capture As"** as "employee_salary". This ensures that the salary amount is captured as text, and be able to get it later in the flow.
 
 > *Include annotated screenshot highlighting signature placement configuration.*
@@ -263,7 +263,7 @@ Once signed, automatically retrieve the captured value from the employee salary.
 
 1. Add **"Get a captured value"** action from the SignatureAPI connector.
 2. Select the correct **Envelope ID** from dynamic content.
-3. Select the correct **Captured Key**, must be the same as the one defined earlier.
+3. Select the correct **Captured Key**, must be the same as the one defined earlier ("employee_salary") to be able to get the salary amount filled by the employer.
 
 > *Include annotated screenshot of captured value retrieval.*
 
