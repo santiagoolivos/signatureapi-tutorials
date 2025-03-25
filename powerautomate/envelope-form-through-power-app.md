@@ -99,19 +99,19 @@ First, create a Power App to collect necessary customer details (Name, Email Add
 4. Select **Create From Blank**.
 5. Enter a name for the Flow. Notice that Power Apps has automatically been selected to trigger the Flow.
 
-    > *Include annotated screenshot of the Power Automate creation.*
+    > *Include annotated screenshot .*
 
 6. Click on the trigger (Power Apps (V2)) and select **Add an input**. 
 
-    > *Include annotated screenshot of the Power Automate creation.*
+    > *Include annotated screenshot .*
 
 7. Select the **Text** type, and enter a name for the input (for example, Customer Name). Do it also for the other variable (Customer Email).
 
-    > *Include annotated screenshot of the Power Automate creation.*
+    > *Include annotated screenshot .*
 
 8. Add a new step and Select the variable action Initialize Variable.
 
-    > *Include annotated screenshot of the Power Automate creation.*
+    > *Include annotated screenshot .*
 
     - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
     - Enter the variable Name.

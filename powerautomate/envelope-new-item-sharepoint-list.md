@@ -128,11 +128,11 @@ Next, retrieve the employee details from the Sharepoint List.
 
 > *Include annotated screenshot showing attachment retrieval.*
 
-### Step 3: Set Up the Signature Process
+### Step 4: Set Up the Signature Process
 
 In this step, you'll configure SignatureAPI to create, send, and track the signature process.
 
-#### 3.1 Create a SignatureAPI Envelope
+#### 4.1 Create a SignatureAPI Envelope
 
 Begin by creating an envelope to hold your contract and signature process.
 
@@ -142,11 +142,8 @@ Begin by creating an envelope to hold your contract and signature process.
 
 > *Include annotated screenshot of the envelope creation.*
 
-<!-- . Add Step: Get file content. Add the ID from the Get attachment step.
 
-Note: Power Automate will automatically add this to an Apply Each loop. This just means it will loop through all attachments you make to the item. This won’t affect the behavior, as you’re only attaching one document.
- -->
-#### 3.2 Get file content
+#### 4.2 Get file content
 
 1. Add the **"Get file content"** action from the Sharepoint connector.
 2. Select the Site Address.
@@ -157,7 +154,7 @@ Note: Power Automate will automatically add this to an Apply Each loop. This jus
 > *Include annotated screenshot showing file content action.*
 
 
-#### 3.3 Attach the DOCX Contract Template
+#### 4.3 Attach the DOCX Contract Template
 
 Now, attach your contract template to the envelope and populate it with employee details.
 
@@ -169,7 +166,7 @@ Now, attach your contract template to the envelope and populate it with employee
 
 > *Include annotated screenshot demonstrating dynamic content mappings.*
 
-#### 3.4 Define Signature Placement
+#### 4.4 Define Signature Placement
 
 Specify where the employee should sign on the document.
 
@@ -181,7 +178,7 @@ Specify where the employee should sign on the document.
 > *Include annotated screenshot highlighting signature placement configuration.*
 
 
-#### 3.5 Add the Recipient
+#### 4.5 Add the Recipient
 
 Next, specify who will receive and sign the contract.
 
@@ -191,7 +188,7 @@ Next, specify who will receive and sign the contract.
 
 > *Include annotated screenshot showing recipient details.*
 
-#### 3.6 Start the Signing Process
+#### 4.6 Start the Signing Process
 
 Trigger the sending of your envelope to the employee for signing.
 
@@ -200,11 +197,11 @@ Trigger the sending of your envelope to the employee for signing.
 
 > *Include annotated screenshot confirming the envelope start.*
 
-### Step 4: Monitor and Finalize the Contract
+### Step 5: Monitor and Finalize the Contract
 
 Next, configure your flow to wait for the signing to complete, retrieve the signed contract, and notify HR.
 
-#### 4.1 Wait for Signature Completion
+#### 5.1 Wait for Signature Completion
 
 Pause the flow until the employee signs the contract.
 
@@ -213,7 +210,7 @@ Pause the flow until the employee signs the contract.
 
 > *Include annotated screenshot of waiting action.*
 
-#### 4.2 Retrieve the Signed Contract
+#### 5.2 Retrieve the Signed Contract
 
 Once signed, automatically retrieve the completed document.
 
@@ -222,7 +219,7 @@ Once signed, automatically retrieve the completed document.
 
 > *Include annotated screenshot of deliverable retrieval.*
 
-#### 4.3 Save the Signed Contract to Sharepoint
+#### 5.3 Save the Signed Contract to Sharepoint
 
 Save the signed document for record-keeping.
 
@@ -232,7 +229,7 @@ Save the signed document for record-keeping.
 
 > *Include annotated screenshot of file saving.*
 
-#### 4.4 Notify HR via Email
+#### 5.4 Notify HR via Email
 
 Automatically inform HR that the contract has been signed and saved.
 
