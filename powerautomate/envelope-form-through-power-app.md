@@ -1,0 +1,327 @@
+---
+title: Automating Customer Agreements Signing Process with Power Apps, SignatureAPI and Microsoft Power Automate
+---
+
+## Overview
+
+This tutorial demonstrates how to streamline the customer agreements signing process by automatically sending, signing, and storing agreements. By integrating **Power Apps** (for data collection), **Sharepoint Documents** (for storing contract templates), and the **SignatureAPI connector** (for electronic signatures), you can eliminate manual errors and delays in customer agreements signing.
+
+### What You’ll Learn
+
+* How to trigger a flow with a new Power App response.
+* Retrieving and pre-filling a DOCX contract template from Sharepoint.
+* Creating and sending a signature envelope using SignatureAPI.
+* Monitoring the signing process and retrieving the signed document.
+* Saving the signed contract and notifying the business automatically.
+
+### The Problem
+
+Businesses often struggle with manually handling customer agreements, causing delays in customer onboarding. Common issues include:
+
+* **Slow processing** – manual tasks create delays.
+* **Errors** – mistakes from manual data entry.
+* **Tracking difficulty** – challenges in monitoring signing status.
+
+### How Automation Helps
+
+Automation simplifies this process by:
+
+* Automatically sending agreements upon submission of the Power App form.
+* Using templates pre-filled with customer details.
+* Tracking signature status and storing documents automatically.
+* Informing the business instantly once agreements are signed.
+
+## Requirements
+
+Before starting, make sure you have:
+
+* **Power Automate** – To build workflows.
+* **SignatureAPI account** – For electronic signatures.
+* **Power Apps** – For collecting customer information.
+* **Sharepoint Documents** – For storing your DOCX templates.
+* **Outlook** – For sending notifications (other email providers also work).
+
+## Flow Overview
+
+The automation process follows these steps:
+
+1. **Trigger:** Power Apps submission starts the flow.
+2. **Data Retrieval:** Get customer details and fetch the agreement template from Sharepoint Documents.
+3. **Signature Process:** Create an envelope via SignatureAPI, add recipient details, and attach the DOCX.
+4. **Monitoring:** Wait for the agreement to be signed.
+5. **Storage & Notification:** Save the signed document in Sharepoint and notify the business via email.
+
+Here’s what your final Power Automate flow will look like:
+
+> Screenshot of the completed flow
+
+## Step-by-Step Tutorial
+
+Follow these steps to automate your customer agreements signing process using Power Apps, SignatureAPI, and Microsoft Power Automate:
+
+### Step 1: Prepare the Agreement Template
+
+First, create or update your agreement template by adding placeholders for dynamic fields (customer details) and defining where the customer will sign.
+
+**To prepare your template:**
+
+1. Open your existing customer agreement document (DOCX format) in Microsoft Word.
+2. Identify each place where customer details should be dynamically inserted (e.g., name, email).
+3. Insert placeholders using **double curly brackets** around descriptive keys. Examples:
+- Customer name: `{{customer.name}}`
+- Customer email: `{{customer.email}}`
+4. Define the location for the signature clearly by inserting a signature placeholder using **double square brackets**, e.g.:  `[[customer_signature]]`
+
+**Example placeholder usage in your document:**
+
+> *Dear `{{customer.name}}`,*  
+> *Please review and sign your agreement below:*  
+> `[[customer_signature]]`
+
+5. Save your template and upload it to **Documents** in the **Sharepoint Site**.
+
+**Important:**
+- Ensure placeholder keys match exactly with what you'll use later in Power Automate.
+- Keep your template simple and clear to avoid confusion during dynamic insertion.
+
+> *Include annotated screenshot clearly indicating examples of placeholders in a DOCX document.*
+
+
+### Step 2: Create a Power App and initialize variables
+
+First, create a Power App to collect necessary customer details (Name, Email Address).
+
+1. Visit [Power Apps](https://make.powerapps.com) and sign in.
+2. Create a new **Blank Canvas App** and choose the format type. For this example, choose the **Phone** format.
+3. From the left-hand menu bar, click on the three dots, select **Power Automate**, and select **Create New Flow**.
+
+    > *Include annotated screenshot of the Power Automate creation.*
+4. Select **Create From Blank**.
+5. Enter a name for the Flow. Notice that Power Apps has automatically been selected to trigger the Flow.
+
+    > *Include annotated screenshot of the Power Automate creation.*
+
+6. Click on the trigger (Power Apps (V2)) and select **Add an input**. 
+
+    > *Include annotated screenshot of the Power Automate creation.*
+
+7. Select the **Text** type, and enter a name for the input (for example, Customer Name). Do it also for the other variable (Customer Email).
+
+    > *Include annotated screenshot of the Power Automate creation.*
+
+8. Add a new step and Select the variable action Initialize Variable.
+
+    > *Include annotated screenshot of the Power Automate creation.*
+
+    - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
+    - Enter the variable Name.
+    - Use the Type drop-down menu and select String as the variable type.
+    - Click in the Value field and select the Customer Name variable from the Dynamic Content list. This will allow us to pass in a parameter associated with this variable in Power Apps.
+    - Repeat these steps to initialize the other variable (Customer Email).
+
+> *Include annotated screenshot highlighting key form creation steps.*
+
+### Step 3: Retrieve Contract Template from Sharepoint
+
+
+Now, fetch your customer agreement template stored in Sharepoint.
+
+1. Add **"Get File Content using Path"** from the Sharepoint connector.
+2. Select the DOCX template stored in your Sharepoint.
+
+> *Include annotated screenshot highlighting file path selection.*
+
+### Step 4: Create the Envelope with SignatureAPI 
+
+In this step, you'll configure SignatureAPI to create, send, and track the signature process.
+
+#### 4.1 Create a SignatureAPI Envelope
+
+Begin by creating an envelope to hold your contract and signature process.
+
+1. Add a new step with the **"Create an Envelope"** action (SignatureAPI connector).
+2. If prompted, authenticate your connection using your SignatureAPI key from the [SignatureAPI Dashboard](https://dashboard.signatureapi.com/settings/api-keys).
+3. Set an **Envelope Title** (e.g., customer name) and email message using dynamic content.
+
+> *Include annotated screenshot of the envelope creation.*
+
+#### 4.2 Add the Recipient
+
+Next, specify who will receive and sign the contract.
+
+1. Add **"Add Recipient"** action.
+2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
+3. Set the **Recipient Key** (e.g., "customer"), matching your DOCX placeholders.
+
+> *Include annotated screenshot showing recipient details.*
+
+#### 4.3 Attach the DOCX Contract Template
+
+Now, attach your contract template to the envelope and populate it with customer details.
+
+1. Add **"Add a Template – DOCX"** action.
+2. Select **File Content** from the Sharepoint action.
+3. Set the **Document Title** (e.g., "Customer Agreement").
+4. Ensure your DOCX template uses placeholders (`{{customer.name}}`, etc.) and map each field to the corresponding dynamic content from the Power Apps initialized variables.
+
+> *Include annotated screenshot demonstrating dynamic content mappings.*
+
+#### 4.4 Define Signature Placement
+
+Specify where the customer should sign on the document.
+
+1. Add **"Add a Place – Signature"** action.
+2. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
+3. Ensure the recipient key matches the key defined earlier.
+
+> *Include annotated screenshot highlighting signature placement configuration.*
+
+#### 4.5 Start the Signing Process
+
+Trigger the sending of your envelope to the customer for signing.
+
+1. Add **"Start Envelope"** action.
+2. Select the appropriate **Envelope ID** from dynamic content.
+
+> *Include annotated screenshot confirming the envelope start.*
+
+### Step 5: Monitor and Finalize the Contract
+
+Next, configure your flow to wait for the signing to complete, retrieve the signed contract, and notify the business.
+
+#### 5.1 Wait for Signature Completion
+
+Pause the flow until the customer signs the contract.
+
+1. Add **"Wait for Envelope Completion"** action.
+2. Select the correct **Envelope ID**.
+
+> *Include annotated screenshot of waiting action.*
+
+#### 5.2 Retrieve the Signed Contract
+
+Once signed, automatically retrieve the completed document.
+
+1. Add **"Get Deliverables"** action.
+2. Select the correct **Deliverable ID** from dynamic content.
+
+> *Include annotated screenshot of deliverable retrieval.*
+
+#### 5.3 Save the Signed Contract to Sharepoint
+
+Save the signed document for record-keeping.
+
+1. Add **"Create File"** action (Sharepoint connector).
+2. Set the destination folder and filename (ending in `.pdf`).
+3. Map **File Content** from the deliverable.
+
+> *Include annotated screenshot of file saving.*
+
+#### 5.4 Notify HR via Email
+
+Automatically inform HR that the contract has been signed and saved.
+
+1. Add **"Send an Email"** action (Outlook connector).
+2. Configure the email recipient (business), subject, and message.
+3. Attach the signed contract file from dynamic content.
+
+> *Include annotated screenshot highlighting email notification.*
+
+<!-- save the flow   -->
+#### 5.5 Save the Flow
+
+Save the flow clicking on the **Save** button in the top left corner. This will save the flow to Power Automate and add it to the Power App.
+
+
+### Step 6: Create the text inputs in power app
+
+Create the text inputs in the Power App to collect the customer details.
+
+1. Select Insert in the top menu bar and then select Label.
+2. Change the Text value of this label to "Name:” This can be done in either the top function bar or through the Text property in the right-hand menu.
+
+    > *Include annotated screenshot of the text label.*
+
+3. Select Input from the top menu bar and select Text input from the drop-down menu.
+
+    - Repeat these steps to create the other text input fields for the other variable (Customer Email).
+ 
+    **Quick Tip!** Select the text input bar. Notice the element name has been highlighted in the left-hand Tree view. Click the three dots on this element and Rename this element to match the text label. In this case, "Name." This will enable you to identify this element easily later on when you refer to this input’s value to trigger the Flow.
+
+    > *Include annotated screenshot of the text input field.*
+
+
+5. Select Button from the top menu bar.
+
+    - Enter Submit in the Text property on the right-hand menu.
+    - Position this button below the text input fields.
+
+    > *Include annotated screenshot of the button.*
+
+6. Select the newly created Submit button.
+
+    - Select OnSelect from the drop-down menu in the upper left-hand corner.
+
+    - In the function bar, enter: FlowName.Run(name.Text, email.Text). This allows us to trigger the Power Automate Flow and pass in the text input fields as parameters that reference the variables initialized in the Flow.
+
+      > *Include annotated screenshot highlighting the text input fields and the Submit button.*
+
+      **WARNING:** Power Apps expects a certain order for the parameters to be passed in and displays an example .Run() function call with the variable names as parameter placeholders. Make sure the order of the parameters match the expected order by Power Apps to prevent invalid argument errors.
+
+
+      **Note:** Notice that by renaming the text input field elements in Step 23, you can easily reference them when passing them into the .Run() function as parameters. Power Apps has also color-coded each text input field to its corresponding parameter value.
+
+
+### Step 7: Test Your Automation
+
+Finally, test the entire process end-to-end.
+
+1. Select the Preview button in the upper-right hand corner to fill out the text input fields with recipient information and trigger the Flow by clicking the Submit button.
+2. Submit a test response clicking on the Submit button.
+3. Verify:
+  - Contract is sent to the customer via email.
+  - Signature process initiates correctly.
+  - Signed contract saves successfully in Sharepoint.
+  - Business receives an email notification with the signed contract attached.
+
+*Use the following checklist:*
+
+- [ ] Contract sent successfully.
+- [ ] Customer receives and signs contract.
+- [ ] Signed document stored correctly in Sharepoint.
+- [ ] Business receives email notification with attachment.
+
+## Troubleshooting & FAQ
+
+### Common Issues:
+
+- **API Key Errors:** Ensure your SignatureAPI key is correct and authenticated.
+- **Dynamic Content Mapping:** Double-check placeholder naming in your DOCX file matches exactly with dynamic content mappings.
+- **File Access Issues:** Verify permissions and file paths in Sharepoint.
+
+### Frequently Asked Questions:
+
+- *What if the contract isn't sent?*  
+  Check your SignatureAPI dashboard for errors, and verify recipient details.
+
+- *Can I adapt this for other document types?*  
+  Yes, this method is adaptable for any automated document-signing workflow.
+
+## Best Practices & Security
+
+- Always securely manage API keys.
+- Regularly check flow runs in Power Automate for any errors.
+- Document any flow or template changes for future reference.
+
+## Additional Resources
+
+- [SignatureAPI Documentation](https://signatureapi.com/docs)
+- [Microsoft Power Apps Documentation](https://www.microsoft.com/power-platform/power-apps-documentation)
+- [Power Automate Community](https://powerusers.microsoft.com/t5/Microsoft-Power-Automate/ct-p/MPACommunity)
+- [Sharepoint Documentation](https://support.microsoft.com/sharepoint)
+
+## Conclusion
+
+By completing this tutorial, you've successfully automated the process of sending, signing, and managing customer agreements. This efficient workflow frees your business from repetitive tasks and ensures customer agreements are signed efficiently and stored automatically.
+
+**Happy automating!** 
