@@ -1,0 +1,135 @@
+---
+title: Handle SignatureAPI Errors with Slack Notifications in Microsoft Power Automate
+---
+
+## Overview
+
+This tutorial demonstrates how to handle most common errors with SignatureAPI and Microsoft Power Automate.
+
+### What You’ll Learn
+
+* How to trigger a flow with a signatureAPI trigger.
+* How to handle notify the event to Slack with the Microsoft Power Automate connector.
+
+### The Problem
+
+In HR departments, it's common to send important documents like employment contracts, policy acknowledgements, or tax forms for electronic signature. However, sometimes:
+
+* An employee rejects the document due to an error in their personal details.
+* The email bounces because of a typo in the employee's email address.
+
+When these issues happen, HR teams often don’t notice immediately, which leads to delays in onboarding or compliance processes.
+
+For example, when a new hire doesn't sign their contract on time because their email bounced, the onboarding process stalls, leaving both the HR manager and the employee unaware until it's too late.
+
+### How Automation Helps
+
+Automation helps HR teams stay on top of signature issues by:
+
+* Monitoring contract delivery and signature status in real time.
+* Automatically detecting when a contract is rejected or bounced.
+* Instantly notifying the HR team on Slack when something goes wrong.
+* Reducing manual follow-ups and delays in the onboarding or document signing process.
+
+## Requirements
+
+Before starting, make sure you have:
+
+* **Power Automate** – To build workflows.
+* **SignatureAPI account** – For electronic signatures.
+* **Slack Account** – For notifications.
+
+## Flow Overview
+
+The automation process follows these steps:
+
+1. **Trigger:** SignatureAPI trigger starts the flow. In this case, the trigger is when a recipient is rejected. But  you can do the same for other triggers, you can find more information in the [SignatureAPI documentation](https://signatureapi.com/docs).
+2. **Notify Slack:** Send a notification to Slack with the error details.
+
+Here’s what your final Power Automate flow will look like:
+
+> Screenshot of the completed flow
+
+## Step-by-Step Tutorial
+
+Follow these steps to automate the process of handling errors with SignatureAPI and Microsoft Power Automate.
+
+### Step 1: Create the Slack Channel
+
+First, create a Slack channel to receive the notifications.
+
+
+1. Go to **Slack** and create a new channel.
+2. Click **"Create Channel"**.
+
+   ![Slack Channel](/images/slack/create-channel.png)
+
+3. Name the channel and click **"Create"** (make it public or private depending on your needs).
+
+   ![Slack Channel](/images/slack/name-channel.png)
+
+
+### Step 3: Set Up the Power Automate Flow
+
+Now, create the automated workflow in Power Automate, triggered by the SignatureAPI trigger.
+
+#### 3.1 Configure the Trigger
+
+First, set the flow trigger, in this case with the SignatureAPI trigger for the recipient rejection.
+
+1. Go to **Power Automate** and select **Automated Cloud Flow**.
+2. Choose the trigger **"When a recipient is rejected"** (SignatureAPI).
+
+
+#### 3.2 Send the notification to Slack
+
+Next, send the notification to Slack with the Microsoft Power Automate connector.
+
+1. Add the action **"Post message"** from the Slack connector.
+2. Select your Slack channel and the message from Dynamic Content.
+3. Add the Dynamic Content from the SignatureAPI trigger.
+Then, fetch your employment contract template stored in OneDrive.
+
+
+### Step 6: Test Your Automation
+
+Finally, test the entire process end-to-end.
+
+1. Save your Power Automate flow.
+2. Reject a recipient from a test envelope.
+3. Verify:
+  - Slack notification is received.
+
+*Use the following checklist:*
+
+- [ ] Slack notification is received.
+
+## Troubleshooting & FAQ
+
+### Common Issues:
+
+- **API Key Errors:** Ensure your SignatureAPI key is correct and authenticated.
+- **Slack Channel:** Ensure the Slack channel is correct and accessible.
+
+### Frequently Asked Questions:
+
+- **What if the notification isn't received?**  
+  Check your Slack channel for the notification.
+
+## Best Practices & Security
+
+- Always securely manage API keys.
+- Regularly check flow runs in Power Automate for any errors.
+- Document any flow or template changes for future reference.
+
+## Additional Resources
+
+- [SignatureAPI Documentation](https://signatureapi.com/docs)
+- [Slack Documentation](https://slack.com)
+- [Power Automate Community](https://powerusers.microsoft.com/t5/Microsoft-Power-Automate/ct-p/MPACommunity)
+
+## Conclusion
+
+By completing this tutorial, you've successfully automated the process of handling errors with SignatureAPI and Microsoft Power Automate. This efficient workflow frees your HR team from manual follow-ups and delays in the onboarding or document signing process.
+
+**Happy automating!**
