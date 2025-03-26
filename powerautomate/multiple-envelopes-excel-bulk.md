@@ -85,13 +85,14 @@ First, create or update your clients proposal template by adding placeholders fo
 - Ensure placeholder keys match exactly with what you'll use later in Power Automate.
 - Keep your template simple and clear to avoid confusion during dynamic insertion.
 
-> *Include annotated screenshot clearly indicating examples of placeholders in a DOCX document.*
+![Word Template Example](/images/word/client-sales.png)
 
 ### Step 2: Create the Excel File
 
 First, create an Excel file to store the proposal data.
 
 1. Open Microsoft Excel and create a new blank workbook.
+![Excel Template](/images/excel/new-excel.png)
 2. Add the following columns:
   - **Client Name** (Text)
   - **Contact Name** (Text)
@@ -100,11 +101,10 @@ First, create an Excel file to store the proposal data.
 
   - Select all of the columns and rows.
   - In the Ribbon, switch to Insert section and select Table.
+  ![Excel Template](/images/excel/create-table.png)
   - You can also name your table by selecting your table, click Table Design in the ribbon, and set the name title.
-
+    ![Excel Template](/images/excel/rename-table.png)
 3. Save the Excel file to OneDrive.
-
-> *Include annotated screenshot highlighting the table creation.*
 
 ### Step 3: Set Up the Power Automate Flow
 
@@ -117,7 +117,7 @@ First, set the flow trigger to run manually.
 1. Go to **Power Automate** and select **Instant Cloud Flow**.
 2. Add Trigger. Name your flow, select **"Manually trigger a flow"**, and then click **Create**.
 
-> *Include annotated screenshot of trigger configuration.*
+![Trigger](/images/powerautomate/excel-flow/trigger.png)
 
 #### 3.2 Retrieve Proposal Data from Excel File
 
@@ -127,9 +127,7 @@ Next, retrieve the proposal data from the Excel file.
 2. Select the **Location** from the Excel file, for **OneDrive for Business**, select the **Document Library** and then select the excel **File**.
 3. Select the **Table Name** from the Excel file.
 
-
-> *Include annotated screenshot showing table retrieval.*
-
+![List Rows](/images/powerautomate/excel-flow/list-rows.png)
 
 #### 3.3 Initialize a variable
 
@@ -140,14 +138,14 @@ In this step, you'll initialize a variable to store the proposal data.
 3. Set **Type** to Array.
 4. Set **Value** to the proposal data from the **"List rows present in a table"** action.
 
-> *Include annotated screenshot showing variable initialization.*
+![Initialize Variable](/images/powerautomate/excel-flow/initialize-variable.png)
 
 #### 3.4 Get file content
 
 1. Add the **"Get file content using path"** action from the OneDrive for Business connector.
 2. Select the File path to the proposal template.
 
-> *Include screenshot of the file content action.*
+![Get File Content](/images/powerautomate/excel-flow/get-file-content.png)
 
 #### 3.5 Apply each loop
 
@@ -156,7 +154,7 @@ Now, in this step you will add the **"Apply to each"** action to the flow, that 
 1. Add the **"Apply each"** action from the Control connector.
 2. Set the **Items** to the proposal data from the **"List rows present in a table"** action from dynamic content.
 
-> *Include screenshot of the apply each loop action.*
+![Apply Each](/images/powerautomate/excel-flow/apply-each.png)
 
 ### Step 4: Set Up the Signature Process
 

@@ -87,7 +87,7 @@ First, create or update your employment contract template by adding placeholders
 - Ensure placeholder keys match exactly with what you'll use later in Power Automate.
 - Keep your template simple and clear to avoid confusion during dynamic insertion.
 
-> *Include annotated screenshot clearly indicating examples of placeholders in a DOCX document.*
+![Word Template Example](/images/word/employee-template.png)
 
 ### Step 2: Create the Sharepoint List
 
@@ -95,14 +95,18 @@ First, create a Sharepoint List to store the employee details.
 
 1. Visit [Microsoft Lists](https://www.microsoft.com/en-us/microsoft-365/microsoft-lists) and sign in.
 2. Click on **"New List"** and then click on **"Blank List"**.
+
+    ![New List](/images/sharepoint-lists/new-list.png)
 3. Rename the list, and save it to the Sharepoint Site.
+    
+    ![Rename List](/images/sharepoint-lists/rename-list.png)
 4. Add the following columns:
   - **First Name** (Text)
   - **Last Name** (Text)
   - **Email Address** (Text)
+    
+    ![Add Columns](/images/sharepoint-lists/new-column.png)
 5. Save and publish the list.
-
-> *Include annotated screenshot highlighting key form creation steps.*
 
 ### Step 3: Set Up the Power Automate Flow
 
@@ -114,9 +118,11 @@ First, set the flow trigger to run whenever a new item with is added to the Shar
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
 2. Add Trigger. Name your flow, select **"When an item is created"** from the Sharepoint connector, and then click **Create**.
+
+    ![Trigger](/images/powerautomate/sharepoint-list-flow/trigger.png)
 3. Select the Site Address and the list you created earlier.
 
-> *Include annotated screenshot of trigger configuration.*
+    ![Select List](/images/powerautomate/sharepoint-list-flow/select-list.png)
 
 #### 3.2 Retrieve Employee Details from Sharepoint List
 
@@ -125,8 +131,7 @@ Next, retrieve the employee details from the Sharepoint List.
 1. Add the action **"Get attachments"** from the Sharepoint connector.
 2. Select the Site Address, List Name and Item ID from the previous step with Dynamic Content.
 
-
-> *Include annotated screenshot showing attachment retrieval.*
+    ![Get Attachments](/images/powerautomate/sharepoint-list-flow/get-attachments.png)
 
 ### Step 4: Set Up the Signature Process
 
