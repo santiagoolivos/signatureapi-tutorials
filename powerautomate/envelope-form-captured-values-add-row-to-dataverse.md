@@ -92,7 +92,8 @@ First, create or update your employment contract template by adding placeholders
 - Ensure placeholder keys match exactly with what you'll use later in Power Automate.
 - Keep your template simple and clear to avoid confusion during dynamic insertion.
 
-> *Include annotated screenshot clearly indicating examples of placeholders in a DOCX document.*
+![Word Template Example](/images/word/employee-template-salary.png)
+
 
 ### Step 2: Create the Microsoft Form
 
@@ -100,30 +101,33 @@ First, create a Microsoft Form to collect necessary employee details (First Name
 
 1. Visit [Microsoft Forms](https://forms.office.com) and sign in.
 2. Click **"New Form"**.
-3. Add these required questions:
+![New Form](/images/forms/new-form.png)
+3. Name the form and add these required questions:
   - **First Name** (Text, required)
   - **Last Name** (Text, required)
   - **Email Address** (Text, required)
+![Add request](/images/forms/add-text-request.png)
+![Rename form](/images/forms/rename-form.png)
 4. Save and publish your form.
-
-> *Include annotated screenshot highlighting key form creation steps.*
+![Employee Form](/images/forms/employee-form.png)
 
 ### Step 3: Create the Dataverse Table
 
 Create a Dataverse table to store the employee details from the form and signature completion.
 
 1. Go to [Power Apps](https://make.powerapps.com) and sign in.
-2. Click **"Data"** and then **"Tables"**.
+2. From the left menu click on **"Tables"**.
 3. Click on the **Start with a blank table** button.
+![Start with a blank table](/images/dataverse/start-with-blank.png)
 4. Add the following columns:
   - **First Name** (Text)
   - **Last Name** (Text)
   - **Email Address** (Text)
   - **Salary Amount** (Text)
   - **Signature Completion** (Text)
+![Add columns](/images/dataverse/add-columns.png)
 5. Rename the table (e.g. **Employee Contracts**) and click on the **Save and exit** button.
-
-> *Include annotated screenshot of the table creation.*
+![Rename table](/images/dataverse/rename-table.png)
 
 ### Step 4: Set Up the Power Automate Flow
 
@@ -137,7 +141,8 @@ First, set the flow trigger to run whenever your form is submitted.
 2. Choose the trigger **"When a new response is submitted"** (Microsoft Forms).
 3. Select the form you created earlier.
 
-> *Include annotated screenshot of trigger configuration.*
+![Trigger](/images/powerautomate/forms-flow/trigger.png)
+
 
 #### 4.2 Retrieve Employee Details
 
@@ -146,8 +151,7 @@ Next, retrieve the employee details submitted through the form.
 1. Add the action **"Get response details"**.
 2. Select your form (**Form ID**) and the response (**Response ID**) from Dynamic Content.
 
-> *Include annotated screenshot showing dynamic content mapping.*
-
+![Get response details](/images/powerautomate/forms-flow/get-response-details.png)
 #### 4.3 Retrieve Contract Template from OneDrive
 
 Then, fetch your employment contract template stored in OneDrive.
@@ -155,7 +159,7 @@ Then, fetch your employment contract template stored in OneDrive.
 1. Add **"Get File Content using Path"** from the OneDrive connector.
 2. Select the DOCX template stored in your OneDrive.
 
-> *Include annotated screenshot highlighting file path selection.*
+![Get file content](/images/powerautomate/forms-flow/get-file-content.png)
 
 ### Step 4: Set Up the Signature Process
 

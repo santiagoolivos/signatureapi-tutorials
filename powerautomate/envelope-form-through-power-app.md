@@ -84,7 +84,8 @@ First, create or update your agreement template by adding placeholders for dynam
 - Ensure placeholder keys match exactly with what you'll use later in Power Automate.
 - Keep your template simple and clear to avoid confusion during dynamic insertion.
 
-> *Include annotated screenshot clearly indicating examples of placeholders in a DOCX document.*
+![Word Template Example](/images/word/customer-agreement.png)
+
 
 
 ### Step 2: Create a Power App and initialize variables
@@ -93,33 +94,25 @@ First, create a Power App to collect necessary customer details (Name, Email Add
 
 1. Visit [Power Apps](https://make.powerapps.com) and sign in.
 2. Create a new **Blank Canvas App** and choose the format type. For this example, choose the **Phone** format.
+![New Power App](/images/powerapps/new-power-app.png)
 3. From the left-hand menu bar, click on the three dots, select **Power Automate**, and select **Create New Flow**.
-
-    > *Include annotated screenshot of the Power Automate creation.*
+![New Power Automate Flow](/images/powerapps/new-powerautomate-flow.png)
 4. Select **Create From Blank**.
 5. Enter a name for the Flow. Notice that Power Apps has automatically been selected to trigger the Flow.
-
-    > *Include annotated screenshot .*
+![Trigger](/images/powerapps/powerautomate-trigger.png)
 
 6. Click on the trigger (Power Apps (V2)) and select **Add an input**. 
-
-    > *Include annotated screenshot .*
-
+![Add Input](/images/powerapps/powerautomate-add-input.png)
 7. Select the **Text** type, and enter a name for the input (for example, Customer Name). Do it also for the other variable (Customer Email).
-
-    > *Include annotated screenshot .*
-
+![Text Input](/images/powerapps/powerautomate-text-input.png)
 8. Add a new step and Select the variable action Initialize Variable.
 
-    > *Include annotated screenshot .*
-
-    - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
-    - Enter the variable Name.
-    - Use the Type drop-down menu and select String as the variable type.
-    - Click in the Value field and select the Customer Name variable from the Dynamic Content list. This will allow us to pass in a parameter associated with this variable in Power Apps.
-    - Repeat these steps to initialize the other variable (Customer Email).
-
-> *Include annotated screenshot highlighting key form creation steps.*
+  - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
+  - Enter the variable Name.
+  - Use the Type drop-down menu and select String as the variable type.
+  - Click in the Value field and select the Customer Name variable from the Dynamic Content list. This will allow us to pass in a parameter associated with this variable in Power Apps.
+  - Repeat these steps to initialize the other variable (Customer Email).
+![Initialize Variable](/images/powerapps/powerautomate-initialize-variable.png)
 
 ### Step 3: Retrieve Contract Template from Sharepoint
 
@@ -129,8 +122,7 @@ Now, fetch your customer agreement template stored in Sharepoint.
 1. Add **"Get File Content using Path"** from the Sharepoint connector.
 2. Select the DOCX template stored in your Sharepoint.
 
-> *Include annotated screenshot highlighting file path selection.*
-
+![Get File Content](/images/powerapps/powerautomate-get-file-content-sharepoint.png)
 ### Step 4: Create the Envelope with SignatureAPI 
 
 In this step, you'll configure SignatureAPI to create, send, and track the signature process.
@@ -240,36 +232,35 @@ Create the text inputs in the Power App to collect the customer details.
 1. Select Insert in the top menu bar and then select Label.
 2. Change the Text value of this label to "Name:” This can be done in either the top function bar or through the Text property in the right-hand menu.
 
-    > *Include annotated screenshot of the text label.*
+    ![Label](/images/powerapps/insert-label.png)
 
 3. Select Input from the top menu bar and select Text input from the drop-down menu.
 
-    - Repeat these steps to create the other text input fields for the other variable (Customer Email).
- 
+  - Repeat these steps to create the other text input fields for the other variable (Customer Email).
+
     **Quick Tip!** Select the text input bar. Notice the element name has been highlighted in the left-hand Tree view. Click the three dots on this element and Rename this element to match the text label. In this case, "Name." This will enable you to identify this element easily later on when you refer to this input’s value to trigger the Flow.
 
-    > *Include annotated screenshot of the text input field.*
-
+    ![Text Input](/images/powerapps/text-input.png)
 
 5. Select Button from the top menu bar.
 
     - Enter Submit in the Text property on the right-hand menu.
     - Position this button below the text input fields.
 
-    > *Include annotated screenshot of the button.*
+    ![Button](/images/powerapps/add-button.png)
 
 6. Select the newly created Submit button.
 
-    - Select OnSelect from the drop-down menu in the upper left-hand corner.
+  - Select OnSelect from the drop-down menu in the upper left-hand corner.
 
-    - In the function bar, enter: FlowName.Run(name.Text, email.Text). This allows us to trigger the Power Automate Flow and pass in the text input fields as parameters that reference the variables initialized in the Flow.
+  - In the function bar, enter: FlowName.Run(name.Text, email.Text). This allows us to trigger the Power Automate Flow and pass in the text input fields as parameters that reference the variables initialized in the Flow.
 
-      > *Include annotated screenshot highlighting the text input fields and the Submit button.*
+    ![Button Submit](/images/powerapps/button-on-submit.png)
 
-      **WARNING:** Power Apps expects a certain order for the parameters to be passed in and displays an example .Run() function call with the variable names as parameter placeholders. Make sure the order of the parameters match the expected order by Power Apps to prevent invalid argument errors.
+    **WARNING:** Power Apps expects a certain order for the parameters to be passed in and displays an example .Run() function call with the variable names as parameter placeholders. Make sure the order of the parameters match the expected order by Power Apps to prevent invalid argument errors.
 
 
-      **Note:** Notice that by renaming the text input field elements in Step 23, you can easily reference them when passing them into the .Run() function as parameters. Power Apps has also color-coded each text input field to its corresponding parameter value.
+    **Note:** Notice that by renaming the text input field elements in Step 23, you can easily reference them when passing them into the .Run() function as parameters. Power Apps has also color-coded each text input field to its corresponding parameter value.
 
 
 ### Step 7: Test Your Automation
@@ -277,7 +268,11 @@ Create the text inputs in the Power App to collect the customer details.
 Finally, test the entire process end-to-end.
 
 1. Select the Preview button in the upper-right hand corner to fill out the text input fields with recipient information and trigger the Flow by clicking the Submit button.
+
+    ![Preview](/images/powerapps/preview-button.png)
+
 2. Submit a test response clicking on the Submit button.
+  ![Preview](/images/powerapps/run-test.png)
 3. Verify:
   - Contract is sent to the customer via email.
   - Signature process initiates correctly.
