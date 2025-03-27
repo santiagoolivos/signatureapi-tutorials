@@ -4,7 +4,7 @@ title: Handle SignatureAPI Errors with Slack Notifications in Microsoft Power Au
 
 ## Overview
 
-This tutorial demonstrates how to handle most common errors with SignatureAPI and Microsoft Power Automate.
+This tutorial demonstrates how to handle most common errors with SignatureAPI and Microsoft Power Automate. You can use this tutorial for sending Slack notifications for other triggers, you can find more information in the [SignatureAPI documentation](https://signatureapi.com/docs).
 
 ### What You’ll Learn
 
@@ -15,8 +15,7 @@ This tutorial demonstrates how to handle most common errors with SignatureAPI an
 
 In HR departments, it's common to send important documents like employment contracts, policy acknowledgements, or tax forms for electronic signature. However, sometimes:
 
-* An employee rejects the document due to an error in their personal details.
-* The email bounces because of a typo in the employee's email address.
+* The email to sign for the employee bounces.
 
 When these issues happen, HR teams often don’t notice immediately, which leads to delays in onboarding or compliance processes.
 
@@ -27,7 +26,7 @@ For example, when a new hire doesn't sign their contract on time because their e
 Automation helps HR teams stay on top of signature issues by:
 
 * Monitoring contract delivery and signature status in real time.
-* Automatically detecting when a contract is rejected or bounced.
+* Automatically detecting when a contract bounced.
 * Instantly notifying the HR team on Slack when something goes wrong.
 * Reducing manual follow-ups and delays in the onboarding or document signing process.
 
@@ -43,7 +42,7 @@ Before starting, make sure you have:
 
 The automation process follows these steps:
 
-1. **Trigger:** SignatureAPI trigger starts the flow. In this case, the trigger is when a recipient is rejected. But  you can do the same for other triggers, you can find more information in the [SignatureAPI documentation](https://signatureapi.com/docs).
+1. **Trigger:** SignatureAPI trigger starts the flow. In this case, the trigger is when the email to sign for the recipient bounces. But  you can do the same for other triggers, you can find more information in the [SignatureAPI documentation](https://signatureapi.com/docs).
 2. **Notify Slack:** Send a notification to Slack with the error details.
 
 Here’s what your final Power Automate flow will look like:
@@ -78,7 +77,7 @@ Now, create the automated workflow in Power Automate, triggered by the Signature
 First, set the flow trigger, in this case with the SignatureAPI trigger for the recipient rejection.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
-2. Choose the trigger **"When a recipient is rejected"** (SignatureAPI).
+2. Choose the trigger **"When a recipient bounces"** (SignatureAPI).
 
 
 #### 3.2 Send the notification to Slack
