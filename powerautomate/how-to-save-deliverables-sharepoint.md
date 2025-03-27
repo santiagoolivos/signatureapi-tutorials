@@ -17,7 +17,6 @@ This tutorial is for Sharepoint Online, but the same flow can be used for any ot
 
 In HR departments, it's common to send important documents like employment contracts, policy acknowledgements, or tax forms for electronic signature. However, sometimes:
 
-<!-- hard to know when the document is completed and not being saved automatically in the required sharepoint folder  -->
 * Difficult to know when the document is completed.
 * The signed document is not saved in the correct Sharepoint folder.
 
