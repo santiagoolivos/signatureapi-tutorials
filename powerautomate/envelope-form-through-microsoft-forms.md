@@ -93,15 +93,20 @@ First, create a Microsoft Form to collect necessary employee details (First Name
 
 1. Visit [Microsoft Forms](https://forms.office.com) and sign in.
 2. Click **"New Form"**.
-![New Form](/images/forms/new-form.png)
+
+    ![New Form](/images/forms/new-form.png)
 3. Name the form and add these required questions:
   - **First Name** (Text, required)
   - **Last Name** (Text, required)
   - **Email Address** (Text, required)
-![Add request](/images/forms/add-text-request.png)
-![Rename form](/images/forms/rename-form.png)
+
+    ![Add request](/images/forms/add-text-request.png)
+
+    ![Rename form](/images/forms/rename-form.png)
+
 4. Save and publish your form.
-![Employee Form](/images/forms/employee-form.png)
+
+    ![Employee Form](/images/forms/employee-form.png)
 
 ### Step 3: Set Up the Power Automate Flow
 
@@ -113,9 +118,11 @@ First, set the flow trigger to run whenever your form is submitted.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
 2. Choose the trigger **"When a new response is submitted"** (Microsoft Forms).
+
+    ![Trigger](/images/powerautomate/forms-flow/trigger.png)
 3. Select the form you created earlier.
 
-![Trigger](/images/powerautomate/forms-flow/trigger.png)
+    ![Select form](/images/powerautomate/forms-flow/select-form.png)
 
 
 #### 3.2 Retrieve Employee Details
@@ -125,7 +132,7 @@ Next, retrieve the employee details submitted through the form.
 1. Add the action **"Get response details"**.
 2. Select your form (**Form ID**) and the response (**Response ID**) from Dynamic Content.
 
-![Get response details](/images/powerautomate/forms-flow/get-response-details.png)
+   ![Get response details](/images/powerautomate/forms-flow/get-response-details.png)
 #### 3.3 Retrieve Contract Template from OneDrive
 
 Then, fetch your employment contract template stored in OneDrive.
@@ -133,7 +140,7 @@ Then, fetch your employment contract template stored in OneDrive.
 1. Add **"Get File Content using Path"** from the OneDrive connector.
 2. Select the DOCX template stored in your OneDrive.
 
-![Get file content](/images/powerautomate/forms-flow/get-file-content.png)
+    ![Get file content](/images/powerautomate/forms-flow/get-file-content.png)
 
 ### Step 4: Set Up the Signature Process
 
@@ -147,7 +154,7 @@ Begin by creating an envelope to hold your contract and signature process.
 2. If prompted, authenticate your connection using your SignatureAPI key from the [SignatureAPI Dashboard](https://dashboard.signatureapi.com/settings/api-keys).
 3. Set an **Envelope Title** (e.g., employee name) and email message using dynamic content.
 
-> *Include annotated screenshot of the envelope creation.*
+    ![Create envelope](/images/powerautomate/forms-flow/create-envelope.png)
 
 #### 4.2 Add the Recipient
 
@@ -157,7 +164,7 @@ Next, specify who will receive and sign the contract.
 2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
 3. Set the **Recipient Key** (e.g., "employee"), matching your DOCX placeholders.
 
-> *Include annotated screenshot showing recipient details.*
+    ![Add recipient](/images/powerautomate/forms-flow/add-recipient.png)
 
 #### 4.3 Attach the DOCX Contract Template
 
@@ -166,9 +173,9 @@ Now, attach your contract template to the envelope and populate it with employee
 1. Add **"Add a Template – DOCX"** action.
 2. Select **File Content** from the OneDrive action.
 3. Set the **Document Title** (e.g., "Employment Contract").
-4. Ensure your DOCX template uses placeholders (`{{employee.name}}`, etc.) and map each field to the corresponding dynamic content from your form.
+4. Ensure your DOCX template uses placeholders (`{{employee.first_name}}`, etc.) and map each field to the corresponding dynamic content from your form.
 
-> *Include annotated screenshot demonstrating dynamic content mappings.*
+    ![Add template](/images/powerautomate/forms-flow/add-docx-template.png)
 
 #### 4.4 Define Signature Placement
 
@@ -178,7 +185,7 @@ Specify where the employee should sign on the document.
 2. Use the placeholder (e.g., `[[employee_signature]]`) from your DOCX template.
 3. Ensure the recipient key matches the key defined earlier.
 
-> *Include annotated screenshot highlighting signature placement configuration.*
+    ![Add signature](/images/powerautomate/forms-flow/add-signature.png)
 
 #### 4.5 Start the Signing Process
 
@@ -187,7 +194,7 @@ Trigger the sending of your envelope to the employee for signing.
 1. Add **"Start Envelope"** action.
 2. Select the appropriate **Envelope ID** from dynamic content.
 
-> *Include annotated screenshot confirming the envelope start.*
+    ![Start envelope](/images/powerautomate/forms-flow/start-envelope.png)
 
 ### Step 5: Monitor and Finalize the Contract
 
@@ -200,7 +207,7 @@ Pause the flow until the employee signs the contract.
 1. Add **"Wait for Envelope Completion"** action.
 2. Select the correct **Envelope ID**.
 
-> *Include annotated screenshot of waiting action.*
+    ![Wait for envelope completion](/images/powerautomate/forms-flow/wait-envelope.png)
 
 #### 5.2 Retrieve the Signed Contract
 
@@ -209,7 +216,7 @@ Once signed, automatically retrieve the completed document.
 1. Add **"Get a Deliverable"** action.
 2. Select the correct **Deliverable ID** from dynamic content.
 
-> *Include annotated screenshot of deliverable retrieval.*
+    ![Get deliverable](/images/powerautomate/forms-flow/get-deliverable.png)
 
 #### 5.3 Save the Signed Contract to OneDrive
 
@@ -219,7 +226,7 @@ Save the signed document for record-keeping.
 2. Set the destination folder and filename (ending in `.pdf`).
 3. Map **File Content** from the deliverable.
 
-> *Include annotated screenshot of file saving.*
+    ![Save file](/images/powerautomate/forms-flow/save-file.png)
 
 #### 5.4 Notify HR via Email
 
@@ -227,9 +234,9 @@ Automatically inform HR that the contract has been signed and saved.
 
 1. Add **"Send an Email"** action (Outlook connector).
 2. Configure the email recipient (HR), subject, and message.
-3. Attach the signed contract file from dynamic content.
+3. Attach the signed contract file from dynamic content. Ensure to use the **"File Content"** from the **"Get a Deliverable"** action, and filename (ending in `.pdf`).
 
-> *Include annotated screenshot highlighting email notification.*
+    ![Send email](/images/powerautomate/forms-flow/notify-outlook.png)
 
 ### Step 6: Test Your Automation
 
