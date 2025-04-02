@@ -100,12 +100,14 @@ First, create a Sharepoint List to store the employee details.
 3. Rename the list, and save it to the Sharepoint Site.
     
     ![Rename List](/images/sharepoint-lists/rename-list.png)
-4. Add the following columns:
+4. Hide the Title column and add the following ones:
   - **First Name** (Text)
   - **Last Name** (Text)
   - **Email Address** (Text)
     
     ![Add Columns](/images/sharepoint-lists/new-column.png)
+    ![Add Columns](/images/sharepoint-lists/new-column-2.png)
+
 5. Save and publish the list.
 
 ### Step 3: Set Up the Power Automate Flow
@@ -133,6 +135,18 @@ Next, retrieve the employee details from the Sharepoint List.
 
     ![Get Attachments](/images/powerautomate/sharepoint-list-flow/get-attachments.png)
 
+#### 3.3 Get file content
+
+1. Add the **"Get file content"** action from the Sharepoint connector.
+2. Select the Site Address.
+3. Add to the File Identifier the ID from the **Get attachments** step with Dynamic Content.
+    
+    ![Get file content](/images/powerautomate/sharepoint-list-flow/get-file.png)
+
+Note: Power Automate will automatically add this to an Apply Each loop. This just means it will loop through all attachments you make to the item. This won’t affect the behavior, as you’re only attaching one document (If more attachments ara added to any item, its important that it has the same fields as the template).
+
+
+
 ### Step 4: Set Up the Signature Process
 
 In this step, you'll configure SignatureAPI to create, send, and track the signature process.
@@ -145,21 +159,19 @@ Begin by creating an envelope to hold your contract and signature process.
 2. If prompted, authenticate your connection using your SignatureAPI key from the [SignatureAPI Dashboard](https://dashboard.signatureapi.com/settings/api-keys).
 3. Set an **Envelope Title** (e.g., employee first name) and a message using dynamic content.
 
-> *Include annotated screenshot of the envelope creation.*
+    ![Create envelope](/images/powerautomate/sharepoint-list-flow/create-envelope.png)
 
+#### 4.2 Add the Recipient
 
-#### 4.2 Get file content
+Next, specify who will receive and sign the contract.
 
-1. Add the **"Get file content"** action from the Sharepoint connector.
-2. Select the Site Address.
-3. Add to the File Identifier the ID from the **Get attachments** step with Dynamic Content.
+1. Outside the **"For each loop"**, add **"Add Recipient"** action from the SignatureAPI connector.
+2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
+3. Set the **Recipient Key** (e.g., "employee"), matching your DOCX placeholders.
 
-Note: Power Automate will automatically add this to an Apply Each loop. This just means it will loop through all attachments you make to the item. This won’t affect the behavior, as you’re only attaching one document (If more attachments ara added to any item, its important that it has the same fields as the template).
+    ![Add recipient](/images/powerautomate/sharepoint-list-flow/add-recipient.png)
 
-> *Include annotated screenshot showing file content action.*
-
-
-#### 4.3 Attach the DOCX Contract Template
+#### 4.4 Attach the DOCX Contract Template
 
 Now, attach your contract template to the envelope and populate it with employee details.
 
@@ -167,11 +179,11 @@ Now, attach your contract template to the envelope and populate it with employee
 2. Select **File Content** from the **Get file content** action.
 3. Select the Envelope ID from the **Create an Envelope** action.
 4. Set the **Document Title** (e.g., "Employment Contract").
-5. Ensure your DOCX template uses placeholders (`{{employee.name}}`, etc.) and map each field to the corresponding dynamic content from your form.
+5. Ensure your DOCX template uses placeholders (`{{employee.first_name}}`, etc.) and map each field to the corresponding dynamic content from your form.
 
-> *Include annotated screenshot demonstrating dynamic content mappings.*
+    ![Add template](/images/powerautomate/sharepoint-list-flow/add-template.png)
 
-#### 4.4 Define Signature Placement
+#### 4.5 Define Signature Placement
 
 Specify where the employee should sign on the document.
 
@@ -180,18 +192,8 @@ Specify where the employee should sign on the document.
 3. Ensure the recipient key matches the key defined earlier.
 4. Add the **Document ID** from the previous step with Dynamic Content.
 
-> *Include annotated screenshot highlighting signature placement configuration.*
+    ![Add signature](/images/powerautomate/sharepoint-list-flow/add-signature.png)
 
-
-#### 4.5 Add the Recipient
-
-Next, specify who will receive and sign the contract.
-
-1. Outside the **"For each loop"**, add **"Add Recipient"** action from the SignatureAPI connector.
-2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
-3. Set the **Recipient Key** (e.g., "employee"), matching your DOCX placeholders.
-
-> *Include annotated screenshot showing recipient details.*
 
 #### 4.6 Start the Signing Process
 
@@ -200,7 +202,7 @@ Trigger the sending of your envelope to the employee for signing.
 1. Add **"Start Envelope"** action from the SignatureAPI connector.
 2. Select the appropriate **Envelope ID** from dynamic content.
 
-> *Include annotated screenshot confirming the envelope start.*
+    ![Start envelope](/images/powerautomate/sharepoint-list-flow/start-envelope.png)
 
 ### Step 5: Monitor and Finalize the Contract
 
@@ -213,7 +215,7 @@ Pause the flow until the employee signs the contract.
 1. Add **"Wait for Envelope Completion"** action from the SignatureAPI connector.
 2. Select the correct **Envelope ID**.
 
-> *Include annotated screenshot of waiting action.*
+    ![Wait for envelope](/images/powerautomate/sharepoint-list-flow/wait-envelope.png)
 
 #### 5.2 Retrieve the Signed Contract
 
@@ -222,7 +224,7 @@ Once signed, automatically retrieve the completed document.
 1. Add **"Get a Deliverable"** action from the SignatureAPI connector.
 2. Select the correct **Deliverable ID** from dynamic content.
 
-> *Include annotated screenshot of deliverable retrieval.*
+    ![Get deliverable](/images/powerautomate/sharepoint-list-flow/get-deliverable.png)
 
 #### 5.3 Save the Signed Contract to Sharepoint
 
@@ -232,7 +234,7 @@ Save the signed document for record-keeping.
 2. Set the destination folder and filename (ending in `.pdf`).
 3. Map **File Content** from the deliverable.
 
-> *Include annotated screenshot of file saving.*
+    ![Save file](/images/powerautomate/sharepoint-list-flow/save-file.png)
 
 #### 5.4 Notify HR via Email
 
@@ -242,7 +244,7 @@ Automatically inform HR that the contract has been signed and saved.
 2. Configure the email recipient (HR), subject, and message.
 3. Attach the signed contract file from dynamic content.
 
-> *Include annotated screenshot highlighting email notification.*
+    ![Send email](/images/powerautomate/sharepoint-list-flow/send-email.png)
 
 ### Step 6: Test Your Automation
 
