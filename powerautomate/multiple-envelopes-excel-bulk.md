@@ -51,9 +51,14 @@ The automation process follows these steps:
 4. **Monitoring:** Wait for the proposal to be signed.
 5. **Storage & Notification:** Save the signed document in OneDrive and notify the sales team via email.
 
-Here’s what your final Power Automate flow will look like:
+This tutorial has two flows, this is the first flow that will create the envelopes and send the proposals to the clients. 
 
-> Screenshot of the completed flow
+![Flow](/images/powerautomate/excel-flow/complete-flow-1.png)
+
+The second flow will monitor the signing process and notify the sales team.
+
+![Flow](/images/powerautomate/excel-flow/complete-flow-2.png)
+
 
 ## Step-by-Step Tutorial
 
@@ -117,7 +122,7 @@ First, set the flow trigger to run manually.
 1. Go to **Power Automate** and select **Instant Cloud Flow**.
 2. Add Trigger. Name your flow, select **"Manually trigger a flow"**, and then click **Create**.
 
-![Trigger](/images/powerautomate/excel-flow/trigger.png)
+    ![Trigger](/images/powerautomate/excel-flow/trigger.png)
 
 #### 3.2 Retrieve Proposal Data from Excel File
 
@@ -127,25 +132,25 @@ Next, retrieve the proposal data from the Excel file.
 2. Select the **Location** from the Excel file, for **OneDrive for Business**, select the **Document Library** and then select the excel **File**.
 3. Select the **Table Name** from the Excel file.
 
-![List Rows](/images/powerautomate/excel-flow/list-rows.png)
+    ![List Rows](/images/powerautomate/excel-flow/list-rows.png)
 
 #### 3.3 Initialize a variable
 
 In this step, you'll initialize a variable to store the proposal data.
 
 1. Add the action **"Initialize Variable"** from the Variables connector.
-2. Set the **Name** to the variable name (e.g., proposalData).
+2. Set the **Name** to the variable name (e.g., clientsData).
 3. Set **Type** to Array.
 4. Set **Value** to the proposal data from the **"List rows present in a table"** action.
 
-![Initialize Variable](/images/powerautomate/excel-flow/initialize-variable.png)
+    ![Initialize Variable](/images/powerautomate/excel-flow/initialize-variable.png)
 
 #### 3.4 Get file content
 
 1. Add the **"Get file content using path"** action from the OneDrive for Business connector.
 2. Select the File path to the proposal template.
 
-![Get File Content](/images/powerautomate/excel-flow/get-file-content.png)
+    ![Get File Content](/images/powerautomate/excel-flow/get-file-content.png)
 
 #### 3.5 Apply each loop
 
@@ -154,7 +159,7 @@ Now, in this step you will add the **"Apply to each"** action to the flow, that 
 1. Add the **"Apply each"** action from the Control connector.
 2. Set the **Items** to the proposal data from the **"List rows present in a table"** action from dynamic content.
 
-![Apply Each](/images/powerautomate/excel-flow/apply-each.png)
+    ![Apply Each](/images/powerautomate/excel-flow/apply-each.png)
 
 ### Step 4: Set Up the Signature Process
 
@@ -169,10 +174,20 @@ Inside the **"Apply each loop"**, begin by creating an envelope to hold your pro
 3. Set an **Envelope Title** (e.g., proposal) and a message using dynamic content.
 4. In the advanced options, select the topics, and set the topic that this envelopes will have in common (e.g., "clients_proposals"). This will be useful later, to monitor the signing process.
 
-> *Include annotated screenshot of the envelope creation.*
+    ![Create envelope](/images/powerautomate/excel-flow/create-envelope.png)
+
+#### 4.2 Add the Recipient
+
+Next, specify who will receive and sign the contract.
+
+1. Add **"Add Recipient"** action from the SignatureAPI connector.
+2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
+3. Set the **Recipient Key** (e.g., "client"), matching your DOCX placeholders.
+
+    ![Add recipient](/images/powerautomate/excel-flow/add-recipient.png)
 
 
-#### 4.2 Attach the DOCX Contract Template
+#### 4.3 Attach the DOCX Contract Template
 
 Now, attach your contract template to the envelope and populate it with proposal details.
 
@@ -182,9 +197,9 @@ Now, attach your contract template to the envelope and populate it with proposal
 4. Set the **Document Title** (e.g., "Client Name Proposal").
 5. Ensure your DOCX template uses placeholders (`{{client.name}}`, etc.) and map each field to the corresponding dynamic content from your form.
 
-> *Include annotated screenshot demonstrating dynamic content mappings.*
+    ![Add template](/images/powerautomate/excel-flow/add-template.png)
 
-#### 4.3 Define Signature Placement
+#### 4.4 Define Signature Placement
 
 Specify where the client should sign on the document.
 
@@ -193,18 +208,8 @@ Specify where the client should sign on the document.
 3. Ensure the recipient key matches the key defined earlier.
 4. Add the **Document ID** from the previous step with Dynamic Content.
 
-> *Include annotated screenshot highlighting signature placement configuration.*
+    ![Add signature](/images/powerautomate/excel-flow/add-signature.png)
 
-
-#### 4.4 Add the Recipient
-
-Next, specify who will receive and sign the contract.
-
-1. Add **"Add Recipient"** action from the SignatureAPI connector.
-2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
-3. Set the **Recipient Key** (e.g., "client"), matching your DOCX placeholders.
-
-> *Include annotated screenshot showing recipient details.*
 
 #### 4.5 Start the Signing Process
 
@@ -214,7 +219,7 @@ Trigger the sending of your envelope to the client for signing.
 2. Select the appropriate **Envelope ID** from dynamic content.
 3. Save the flow.
 
-> *Include annotated screenshot confirming the envelope start.*
+    ![Start envelope](/images/powerautomate/excel-flow/start-envelope.png)
 
 ### Step 5: Monitor and Finalize the Contract
 
@@ -228,10 +233,12 @@ Now, create a new **"Automated cloud flow"** to monitor the signing process.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
 2.  Name your flow, select **"When a deliverable is generated"** from the SignatureAPI connector.
+    
+    ![Create flow](/images/powerautomate/excel-flow/when-deli-generated.png)
+
 3. Select the topics item that will filter the deliverables that this flow will process. This should be the same topic as the one used in the previous flow defined in the **4.1 Create a SignatureAPI Envelope step**.
 
-
-> *Include annotated screenshot of the new flow creation.*
+    ![Select topic](/images/powerautomate/excel-flow/webhook-topics.png)
 
 #### 5.2 Retrieve the Signed Contract
 
@@ -240,7 +247,7 @@ Retrieve the signed contract from the SignatureAPI.
 1. Add **"Get a Deliverable"** action from the SignatureAPI connector.
 2. Select the correct **Deliverable ID** from dynamic content.
 
-> *Include annotated screenshot of deliverable retrieval.*
+    ![Get deliverable](/images/powerautomate/excel-flow/get-deliverable.png)
 
 #### 5.3 Save the Signed Contract to OneDrive
 
@@ -250,7 +257,7 @@ Save the signed document for record-keeping.
 2. Set the folder path and filename (ending in `.pdf`).
 3. Map **File Content** from the deliverable.
 
-> *Include annotated screenshot of file saving.*
+    ![Save file](/images/powerautomate/excel-flow/onedrive-create-file.png)
 
 #### 5.4 Notify the sales team via Email
 
@@ -263,7 +270,7 @@ Automatically inform the sales team that the proposal has been signed and saved.
   - Add the signed proposal file from dynamic content.
 4. Save the flow.
 
-> *Include annotated screenshot highlighting email notification.*
+    ![Send email](/images/powerautomate/excel-flow/outlook-notify.png)
 
 ### Step 6: Test Your Automation
 

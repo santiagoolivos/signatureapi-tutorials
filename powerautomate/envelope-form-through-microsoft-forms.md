@@ -52,8 +52,7 @@ The automation process follows these steps:
 5. **Storage & Notification:** Save the signed document in OneDrive and notify HR via email.
 
 Here’s what your final Power Automate flow will look like:
-
-> Screenshot of the completed flow
+![Flow](/images/powerautomate/forms-flow/complete-flow.png)
 
 ## Step-by-Step Tutorial
 
