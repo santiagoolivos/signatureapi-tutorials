@@ -94,17 +94,23 @@ First, create a Power App to collect necessary customer details (Name, Email Add
 
 1. Visit [Power Apps](https://make.powerapps.com) and sign in.
 2. Create a new **Blank Canvas App** and choose the format type. For this example, choose the **Phone** format.
-![New Power App](/images/powerapps/new-power-app.png)
+
+    ![New Power App](/images/powerapps/new-power-app.png)
+
 3. From the left-hand menu bar, click on the three dots, select **Power Automate**, and select **Create New Flow**.
-![New Power Automate Flow](/images/powerapps/new-powerautomate-flow.png)
+
+    ![New Power Automate Flow](/images/powerapps/new-powerautomate-flow.png)
 4. Select **Create From Blank**.
 5. Enter a name for the Flow. Notice that Power Apps has automatically been selected to trigger the Flow.
-![Trigger](/images/powerapps/powerautomate-trigger.png)
+
+    ![Trigger](/images/powerapps/trigger.png)
 
 6. Click on the trigger (Power Apps (V2)) and select **Add an input**. 
-![Add Input](/images/powerapps/powerautomate-add-input.png)
+
+    ![Add Input](/images/powerapps/add-input.png)
 7. Select the **Text** type, and enter a name for the input (for example, Customer Name). Do it also for the other variable (Customer Email).
-![Text Input](/images/powerapps/powerautomate-text-input.png)
+
+    ![Text Input](/images/powerapps/pau-text-input.png)
 8. Add a new step and Select the variable action Initialize Variable.
 
   - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
@@ -112,7 +118,8 @@ First, create a Power App to collect necessary customer details (Name, Email Add
   - Use the Type drop-down menu and select String as the variable type.
   - Click in the Value field and select the Customer Name variable from the Dynamic Content list. This will allow us to pass in a parameter associated with this variable in Power Apps.
   - Repeat these steps to initialize the other variable (Customer Email).
-![Initialize Variable](/images/powerapps/powerautomate-initialize-variable.png)
+
+    ![Initialize Variable](/images/powerapps/pau-initialize-variable.png)
 
 ### Step 3: Retrieve Contract Template from Sharepoint
 
@@ -122,7 +129,8 @@ Now, fetch your customer agreement template stored in Sharepoint.
 1. Add **"Get File Content using Path"** from the Sharepoint connector.
 2. Select the DOCX template stored in your Sharepoint.
 
-![Get File Content](/images/powerapps/powerautomate-get-file-content-sharepoint.png)
+    ![Get File Content](/images/powerapps/pau-get-file-content.png)
+
 ### Step 4: Create the Envelope with SignatureAPI 
 
 In this step, you'll configure SignatureAPI to create, send, and track the signature process.
@@ -135,7 +143,7 @@ Begin by creating an envelope to hold your contract and signature process.
 2. If prompted, authenticate your connection using your SignatureAPI key from the [SignatureAPI Dashboard](https://dashboard.signatureapi.com/settings/api-keys).
 3. Set an **Envelope Title** (e.g., customer name) and email message using dynamic content.
 
-> *Include annotated screenshot of the envelope creation.*
+    ![Create envelope](/images/powerapps/create-envelope.png)
 
 #### 4.2 Add the Recipient
 
@@ -145,7 +153,7 @@ Next, specify who will receive and sign the contract.
 2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
 3. Set the **Recipient Key** (e.g., "customer"), matching your DOCX placeholders.
 
-> *Include annotated screenshot showing recipient details.*
+    ![Add recipient](/images/powerapps/add-recipient.png)
 
 #### 4.3 Attach the DOCX Contract Template
 
@@ -156,7 +164,7 @@ Now, attach your contract template to the envelope and populate it with customer
 3. Set the **Document Title** (e.g., "Customer Agreement").
 4. Ensure your DOCX template uses placeholders (`{{customer.name}}`, etc.) and map each field to the corresponding dynamic content from the Power Apps initialized variables.
 
-> *Include annotated screenshot demonstrating dynamic content mappings.*
+    ![Add template](/images/powerapps/add-template.png)
 
 #### 4.4 Define Signature Placement
 
@@ -166,7 +174,7 @@ Specify where the customer should sign on the document.
 2. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
 3. Ensure the recipient key matches the key defined earlier.
 
-> *Include annotated screenshot highlighting signature placement configuration.*
+    ![Add signature](/images/powerapps/add-signature.png)
 
 #### 4.5 Start the Signing Process
 
@@ -175,7 +183,7 @@ Trigger the sending of your envelope to the customer for signing.
 1. Add **"Start Envelope"** action.
 2. Select the appropriate **Envelope ID** from dynamic content.
 
-> *Include annotated screenshot confirming the envelope start.*
+    ![Start envelope](/images/powerapps/start-envelope.png)
 
 ### Step 5: Monitor and Finalize the Contract
 
@@ -188,7 +196,7 @@ Pause the flow until the customer signs the contract.
 1. Add **"Wait for Envelope Completion"** action.
 2. Select the correct **Envelope ID**.
 
-> *Include annotated screenshot of waiting action.*
+    ![Wait for envelope](/images/powerapps/wait-envelope.png)
 
 #### 5.2 Retrieve the Signed Contract
 
@@ -197,7 +205,7 @@ Once signed, automatically retrieve the completed document.
 1. Add **"Get Deliverables"** action.
 2. Select the correct **Deliverable ID** from dynamic content.
 
-> *Include annotated screenshot of deliverable retrieval.*
+    ![Get deliverable](/images/powerapps/get-deliverable.png)
 
 #### 5.3 Save the Signed Contract to Sharepoint
 
@@ -207,7 +215,7 @@ Save the signed document for record-keeping.
 2. Set the destination folder and filename (ending in `.pdf`).
 3. Map **File Content** from the deliverable.
 
-> *Include annotated screenshot of file saving.*
+    ![Save file](/images/powerapps/save-file.png)
 
 #### 5.4 Notify HR via Email
 
@@ -217,7 +225,7 @@ Automatically inform HR that the contract has been signed and saved.
 2. Configure the email recipient (business), subject, and message.
 3. Attach the signed contract file from dynamic content.
 
-> *Include annotated screenshot highlighting email notification.*
+    ![Send email](/images/powerapps/send-email.png)
 
 <!-- save the flow   -->
 #### 5.5 Save the Flow
@@ -232,7 +240,7 @@ Create the text inputs in the Power App to collect the customer details.
 1. Select Insert in the top menu bar and then select Label.
 2. Change the Text value of this label to "Name:” This can be done in either the top function bar or through the Text property in the right-hand menu.
 
-    ![Label](/images/powerapps/insert-label.png)
+    ![Label](/images/powerapps/add-label.png)
 
 3. Select Input from the top menu bar and select Text input from the drop-down menu.
 
@@ -240,7 +248,9 @@ Create the text inputs in the Power App to collect the customer details.
 
     **Quick Tip!** Select the text input bar. Notice the element name has been highlighted in the left-hand Tree view. Click the three dots on this element and Rename this element to match the text label. In this case, "Name." This will enable you to identify this element easily later on when you refer to this input’s value to trigger the Flow.
 
-    ![Text Input](/images/powerapps/text-input.png)
+    ![Text Input](/images/powerapps/add-text-input.png)
+
+    ![Text Input](/images/powerapps/add-text-input-2.png)
 
 5. Select Button from the top menu bar.
 
