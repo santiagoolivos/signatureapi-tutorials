@@ -53,7 +53,7 @@ The automation process follows these steps:
 
 Here’s what your final Power Automate flow will look like:
 
-> Screenshot of the completed flow
+![Flow](/images/powerapps/complete-flow.png)
 
 ## Step-by-Step Tutorial
 

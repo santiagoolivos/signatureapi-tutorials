@@ -119,6 +119,7 @@ First, set the flow trigger to run whenever your form is submitted.
 2. Choose the trigger **"When a new response is submitted"** (Microsoft Forms).
 
     ![Trigger](/images/powerautomate/forms-flow/trigger.png)
+    
 3. Select the form you created earlier.
 
     ![Select form](/images/powerautomate/forms-flow/select-form.png)
