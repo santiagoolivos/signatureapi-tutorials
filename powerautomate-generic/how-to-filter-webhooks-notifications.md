@@ -36,7 +36,7 @@ Before starting, make sure you have:
 
 Also, this tutorial assumes that you have other Power Automate flow that creates (and starts) envelopes with SignatureAPI. That flow must have the **"Create an envelope"** action from SignatureAPI connector including the topics in the body of the envelope that is defined in the **"Envelope Topics"** from the Advanced parameters. In this case the topic is "sales-department".
 
-> Screenshot of the topics defined in the Advanced parameters
+![Envelope topics](/images/powerautomate/filter-webhooks-flow/envelope-topics.png)
 
 
 ## Flow Overview
@@ -49,7 +49,7 @@ The automation process follows these steps:
 
 Here’s what your final Power Automate flow will look like:
 
-> Screenshot of the completed flow
+![Flow](/images/powerautomate/filter-webhooks-flow/complete-flow.png)
 
 ## Step-by-Step Tutorial
 
@@ -64,7 +64,9 @@ Now, create the automated workflow in Power Automate, triggered by the Signature
 First, set the flow trigger, in this case with the SignatureAPI trigger for the deliverable generation.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
-2. Choose the trigger **"When a deliverable is generated"** (SignatureAPI).
+2. Name the flow and choose the trigger **"When a deliverable is generated"** (from the SignatureAPI connector).
+
+    ![Trigger](/images/powerautomate/filter-webhooks-flow/trigger.png)
 
 #### 1.2 Filter the notifications for the specific department
 
@@ -74,13 +76,26 @@ Filter the notifications for the envelopes that has the same topic defined in it
 
 2. The topic filtering acts as a label system - only envelopes tagged with matching topics will trigger notifications, allowing you to route different types of documents to different departments.
 
-#### 1.3 Send the notification to the specific department
+    ![Filter](/images/powerautomate/filter-webhooks-flow/add-topics.png)
 
-Next, send the notification to the specific department with the Microsoft Power Automate connector.
+#### 1.3 Retrieve the Signed Contract
+
+Retrieve the completed document.
+
+1. Add **"Get a Deliverable"** action.
+2. Select the correct **Deliverable ID** from dynamic content.
+
+    ![Get deliverable](/images/powerautomate/filter-webhooks-flow/get-deliverable.png)
+
+#### 1.4 Send the notification to the specific department
+
+Next, send the notification to the specific department with the Outlook connector.
 
 1. Add the action **"Send an email"** from the Microsoft Outlook connector.
 2. In the **"To"** field, add the email address of the department that will receive the notification.
 3. In the rest of the fields, add the dynamic content from the SignatureAPI trigger.
+
+    ![Send email](/images/powerautomate/filter-webhooks-flow/send-email.png)
 
 ### Step 2: Test Your Automation
 
