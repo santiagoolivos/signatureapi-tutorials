@@ -57,7 +57,7 @@ The automation process follows these steps:
 
 Here’s what your final Power Automate flow will look like:
 
-> Screenshot of the completed flow
+![Flow](/images/powerautomate/dataverse-flow/complete-flow.png)
 
 ## Step-by-Step Tutorial
 
@@ -85,9 +85,14 @@ First, create or update your employment contract template by adding placeholders
 
 > *This will be the salary amount you will receive per month: `[[salary_input]]`*
 
-> *Please review and sign your employment contract below:*  
-> `[[employee_signature]]`
+> *Employer Signature:*  
+
 > `[[employer_signature]]`
+
+> *Employee Signature:* 
+
+> `[[employee_signature]]`
+
 5. Save your template and upload it to **OneDrive** (or another preferred storage service).
 
 **Important:**
@@ -225,8 +230,9 @@ Now, attach your contract template to the envelope and populate it with employee
 Specify where the employer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action and rename it to **"Add a Place – Employer Signature"**.
-2. Use the placeholder (e.g., `[[employer_signature]]`) from your DOCX template.
-3. Set the **Recipient Key** from the **Add Recipient - Employer** action.
+2. Set the **Document ID** from the dynamic content.
+3. Use the placeholder (e.g., `[[employer_signature]]`) from your DOCX template.
+4. Set the **Recipient Key** from the **Add Recipient - Employer** action from the dynamic content.
 
     ![Add place employer](/images/powerautomate/dataverse-flow/add-employer-signature.png)
 
@@ -236,7 +242,7 @@ Specify where the employer should fill the salary amount.
 
 1. Add **"Add a Place – Text Input"** action and rename it to **"Add a Place – Salary Input"**.
 2. Use the placeholder (e.g., `[[salary_input]]`) from your DOCX template.
-3. Set the **Recipient Key** from the **Add Recipient - Employer** action. This will ensure that the salary amount is defined and completed in the signature process by the employer.
+3. Set the **Recipient Key** from the **Add Recipient - Employer** action from the dynamic content. This will ensure that the salary amount is defined and completed in the signature process by the employer.
 4. From the advanced parameters, set the **"Capture As"** as "salary_input". This ensures that the salary amount is captured as text, and be able to get it later in the flow.
 
     ![Add place salary](/images/powerautomate/dataverse-flow/add-salary-input.png)
@@ -246,8 +252,9 @@ Specify where the employer should fill the salary amount.
 Specify where the employer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action and rename it to **"Add a Place – Employee Signature"**.
-2. Use the placeholder (e.g., `[[employee_signature]]`) from your DOCX template.
-3. Ensure the recipient key matches the key defined earlier.
+2. Set the **Document ID** from the dynamic content.
+3. Use the placeholder (e.g., `[[employee_signature]]`) from your DOCX template.
+4. Set the **Recipient Key** from the **Add Recipient - Employee** action from the dynamic content.
 
     ![Add place employee](/images/powerautomate/dataverse-flow/add-employee-signature.png)
 
@@ -256,7 +263,7 @@ Specify where the employer should sign on the document.
 Trigger the sending of your envelope to the employee for signing.
 
 1. Add **"Start Envelope"** action.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Set the **Envelope ID** from the dynamic content from the **Create an Envelope** action.
 
     ![Start envelope](/images/powerautomate/dataverse-flow/start-envelope.png)
 
@@ -269,7 +276,7 @@ Next, configure your flow to wait for the signing to complete, retrieve the sign
 Pause the flow until the employee signs the contract.
 
 1. Add **"Wait for Envelope Completion"** action.
-2. Select the correct **Envelope ID**.
+2. Set the **Envelope ID** from the dynamic content from the **Create an Envelope** action.
 
     ![Wait for envelope completion](/images/powerautomate/dataverse-flow/wait-envelope.png)
 
@@ -278,7 +285,7 @@ Pause the flow until the employee signs the contract.
 Once signed, automatically retrieve the captured value from the employee salary.
 
 1. Add **"Get a captured value"** action from the SignatureAPI connector.
-2. Select the correct **Envelope ID** from dynamic content.
+2. Set the **Envelope ID** from the dynamic content from the **Create an Envelope** action.
 3. Select the correct **Captured Key**, must be the same as the one defined earlier ("salary_input") to be able to get the salary amount filled by the employer.
 
     ![Get captured value](/images/powerautomate/dataverse-flow/get-captured-value.png)
@@ -292,9 +299,9 @@ Now, add a row to the Dataverse table with the employee details and the captured
 2. Select the correct **Dataverse Table**, must be the same as the one defined earlier.
 3. From the **Advanced parameters** select the **"Fields"** to be mapped to the employee details and the captured salary amount from the dynamic content.
     
-    - The **First Name**, **Last Name** and **Email Address** will be mapped from the form response details.
-    - The **Salary Amount** will be mapped from the captured value from the signature process.
-    - The **Signature Completion** will be mapped from the **Wait for Envelope Completion** action.
+    - Set the **First Name**, **Last Name** and **Email Address** from the form response details.
+    - Set the **Salary Amount** from the captured value from the **Get a captured value** action.
+    - Set the **Signature Completion** from the **Wait for Envelope Completion** action.
 
     ![Add row](/images/powerautomate/dataverse-flow/add-dataverse-row.png)
 

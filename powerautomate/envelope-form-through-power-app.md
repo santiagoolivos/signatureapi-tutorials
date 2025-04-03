@@ -171,8 +171,9 @@ Now, attach your contract template to the envelope and populate it with customer
 Specify where the customer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
-3. Ensure the recipient key matches the key defined earlier.
+2. Set the **Document ID** from the dynamic content.
+3. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
+4. Set the **Recipient Key** from the dynamic content.
 
     ![Add signature](/images/powerapps/add-signature.png)
 

@@ -1,5 +1,3 @@
-
-<!-- this tutorial is about embedding a signature process in a power pages using a powerautomate flow with the SignatureAPI connector. Also stores the document in one drive -->
 ---
 title: Embed a Signature Ceremony in a Power Pages with SignatureAPI and Microsoft Power Automate
 ---
@@ -13,6 +11,7 @@ This tutorial demonstrates how to embed a signature ceremony in a Power Pages wi
 * How to trigger a flow with a new Power Pages form submission.
 * Retrieving and pre-filling a DOCX contract template from OneDrive.
 * Creating and sending a signature envelope using SignatureAPI.
+* Editing the Power Pages code to run the power automate flow from the submission of a form.
 * Embedding the signature ceremony in a Power Pages form.
 
 ### The Problem
@@ -49,7 +48,7 @@ The automation process follows these steps:
 
 Here’s what your final Power Automate flow will look like:
 
-> Screenshot of the completed flow
+![Flow](/images/powerpages/complete-flow.png)
 
 ## Step-by-Step Tutorial
 
@@ -89,40 +88,42 @@ First, create or update your agreement template by adding placeholders for dynam
 
 1. Visit [Power Pages](https://make.powerpages.microsoft.com) and sign in.
 2. From the left-hand menu bar, in the **"Home"** section, click on **"Start from blank"**.
-![New Power Pages](/images/powerpages/create.png)
-3. Name the site and set the web address and click on **"Done"**.
-![New Power Pages](/images/powerpages/name-address.png)
+
+    ![New Power Pages](/images/powerpages/start-from-blank.png)
+
+3. Name the site (e.g Customer Agreement Form) and set the web address (e.g customer-agreement-form) and click on **"Done"**.
+
+    ![New Power Pages](/images/powerpages/name-address.png)
 
 ### Step 3: Set Up the Power Automate Flow
 
 Now, create the automated workflow in Power Automate, directly from Power Pages.
 
-#### 3.1 Go to Cloud Flows
 
-First, set the flow trigger to run whenever your form is submitted.
+#### 3.1 Set flow trigger
+
+First, set the flow trigger to run whenever power pages calls a flow.
 
 1. From the left-hand menu bar, click on **"Set up"** and select **"Cloud Flows"**.
+
 2. Here you can see the flow you created earlier for any power pages. But in this case we will create a new flow. Click on **"Create new flow"**.
-![Trigger](/images/powerpages/create-new-flow.png)
 
-3. Select the power pages trigger **"When Power Pages calls a flow"** and name the flow (for example, Customer Agreement).
+    ![Trigger](/images/powerpages/create-new-flow.png)
 
-![Trigger](/images/powerpages/select-trigger.png)
+3. Rename the flow (e.g Customer Agreement Flow) and select the power pages trigger **"When Power Pages calls a flow"** and name the flow (for example, Customer Agreement).
 
-4. Click on the Trigger and select **"Add an input"**. Then select the **"Text"** type and enter a name for the input (for example, Customer Name). Do it also for the other variable (customerName).
+    ![Trigger](/images/powerpages/select-trigger.png)
 
-![Trigger](/images/powerpages/add-inputs.png)
+#### 3.2 Add inputs
 
-5. Add a new step and Select the variable action Initialize Variable.
+1. Click on the Trigger and select **"Add an input"**. Then select the **"Text"** type and enter a name for the input as "customerName". Do it also for the other variable as "customerEmail".
 
-  - Select the three dots and Rename this step according to the variable name (for example, Customer Name) before filling out any of the required fields. This will properly name the variable’s Dynamic Content value later on. If the step is not renamed, the value will automatically be named as “InitializeVariable_Value.”
-  - Enter the variable Name.
-  - Use the Type drop-down menu and select String as the variable type.
-  - Click in the Value field and select the Customer Name variable from the Dynamic Content list. This will allow us to pass in a parameter associated with this variable in Power Apps.
-  - Repeat these steps to initialize the other variable (Customer Email).
-![Initialize Variable](/images/powerpages/initialize-variable.png)
+    ![Add Input 1](/images/powerpages/add-input-1.png)
 
-### Step 3: Retrieve Contract Template from OneDrive
+    ![Add Input 2](/images/powerpages/add-input-2.png)
+
+
+### Step 4: Retrieve Contract Template from OneDrive
 
 
 Now, fetch your customer agreement template stored in OneDrive.
@@ -130,95 +131,98 @@ Now, fetch your customer agreement template stored in OneDrive.
 1. Add **"Get File Content using Path"** from the OneDrive connector.
 2. Select the DOCX template stored in your OneDrive.
 
-![Get File Content](/images/powerpages/get-file-content.png)
+    ![Get File Content](/images/powerpages/get-file-content.png)
 
-### Step 4: Set Up the Signature Process
+### Step 5: Set Up the Signature Process
 
 In this step, you'll configure SignatureAPI to create, send, and track the signature process.
 
-#### 4.1 Create a SignatureAPI Envelope
+#### 5.1 Create a SignatureAPI Envelope
 
 Begin by creating an envelope to hold your contract and signature process.
 
 1. Add the **"Create an Envelope"** action (SignatureAPI connector).
 2. If prompted, authenticate your connection using your SignatureAPI key from the [SignatureAPI Dashboard](https://dashboard.signatureapi.com/settings/api-keys).
+
+    ![Create Connection](/images/powerpages/create-connection.png)
+
 3. Set an **Envelope Title** (e.g., customer name) and email message using dynamic content.
 
-> *Include annotated screenshot of the envelope creation.*
+    ![Create Envelope](/images/powerpages/create-envelope.png)
 
-#### 4.2 Add the Recipient
+#### 5.2 Add the Recipient - Signer
 
 Next, specify who will receive and sign the contract which manual ceremony creation.
 
-1. Add **"Add Recipient"** action.
-2. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
-3. Set the **Recipient Key** (e.g., "customer"), matching your DOCX placeholders.
-4. From the **advanced options** select in the **"Recipient Ceremony Creation"** the value **manual**.
+1. Add **"Add Recipient - Signer"** action.
+2. Set the **Envelope ID** from the dynamic content.
+3. Map **Recipient Name** and **Recipient Email** using form details (Dynamic Content).
+4. Set the **Recipient Key** (e.g., "customer"), matching your DOCX placeholders.
+5. From the **advanced options** select in the **"Recipient Ceremony Creation"** the value **manual**.
 
-> *Include annotated screenshot showing recipient details.*
+    ![Add Recipient](/images/powerpages/add-recipient.png)
 
-#### 4.3 Attach the DOCX Contract Template
+#### 5.3 Attach the DOCX Contract Template
 
 Now, attach your contract template to the envelope and populate it with customer details.
 
 1. Add **"Add a Template – DOCX"** action.
-2. Select **File Content** from the Sharepoint action.
-3. Set the **Document Title** (e.g., "Customer Agreement").
-4. Ensure your DOCX template uses placeholders (`{{customer.name}}`, etc.) and map each field to the corresponding dynamic content from the Power Apps initialized variables.
+2. Set the **Envelope ID** from the dynamic content.
+3. Select **File Content** from the Sharepoint action.
+4. Set the **Document Title** (e.g., "Customer Agreement").
+5. Ensure your DOCX template uses placeholders (`{{customer.name}}`, etc.) and map each field to the corresponding dynamic content from the Power Apps initialized variables.
 
-> *Include annotated screenshot demonstrating dynamic content mappings.*
+    ![Add Template](/images/powerpages/add-template.png)
 
-#### 4.4 Define Signature Placement
+#### 5.4 Define Signature Placement
 
 Specify where the customer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
-3. Ensure the recipient key matches the key defined earlier.
+2. Set the **Document ID** from the dynamic content.
+3. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
+4. Set the **Recipient Key** from the dynamic content.
 
-> *Include annotated screenshot highlighting signature placement configuration.*
+    ![Add Place](/images/powerpages/add-signature.png)
 
-#### 4.5 Start the Signing Process
+#### 5.5 Start the Signing Process
 
-Trigger the sending of your envelope to the employee for signing.
+Trigger the sending of your envelope to the customer for signing.
 
 1. Add **"Start Envelope"** action.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Set the **Envelope ID** from the dynamic content.
 
-> *Include annotated screenshot confirming the envelope start.*
+    ![Start Envelope](/images/powerpages/start-envelope.png)
 
 
-#### 4.6 Create the Ceremony for the customer
+#### 5.6 Create the Ceremony for the customer
 
-Create the ceremony for the customer with custom authentication. This will return an URL that will be used to embedd the ceremony in the Power Pages.
+Create the ceremony for the customer with custom authentication. This will return an URL that will be used to embed the ceremony in the Power Pages.
 
 1. Add **"Create Ceremony - Custom authentication"** action from the SignatureAPI connector.
 2. Set the **"Recipient ID"** form the dynamic content.
 3. Set the **"Authentication Provider"** to what you want to use. This field will be used in the Audit Log of the Deliverable as the security provider for that custom ceremony.
 4. Set the **"Authentication Data"** to the data you want to use to verify the user and authentication provider. This will be used in the Audit Log as a security provider data.
-
-For example the following values:
-![Ceremony Authentication Values](/images/powerpages/ceremony-authentication-values.png)
-
-will be used as the following values in the Audit Log:
-![Ceremony Authentication Values](/images/powerpages/audit-log.png)
-
+    
 5. from the advanced options, in the **"Extra Properties"** section, add the following:
-```json
-{"embeddable_in":["*"]}
-```
-This will allow the ceremony to be embedded in any Power Pages.
-#### 4.7 Return the created ceremony URL to the Power Pages
+
+    ```json
+    {"embeddable_in":["*"]}
+    ```
+    This will allow the ceremony to be embedded in any Power Pages.
+
+![Extra Properties](/images/powerpages/create-ceremony.png)
+
+#### 5.7 Return the created ceremony URL to the Power Pages
 
 1. Add an output of type **"Text"**.
 2. Set the **"Name"** to the name of the variable you want to return (e.g. url).
-3. Set the **"Value"** to the URL of the ceremony from the dynamic content.
+3. Set the **"Value"** to the URL of the ceremony from the **Create Ceremony - Custom authentication** action from the dynamic content.
 
-> *Include annotated screenshot confirming the envelope start.*
+![Return Ceremony](/images/powerpages/return-ceremony.png)
 
 
-
-### Step 5: Create the flow and add it to Power Pages
+### Step 6: Create the flow and add it to Power Pages
 
 
 1. Save the flow and copy the flow URL.
@@ -227,23 +231,25 @@ This will allow the ceremony to be embedded in any Power Pages.
 ![Flow URL](/images/powerpages/add-flow.png)
 
 
+### Step 7: Power Pages Form and Embedding Ceremony
 
-### Step 6: Power Pages Form and Embedding Ceremony
+Now, you need to add the ceremony to the Power Pages form. Consider that  to run the power automate flow from the submission of a form, its necessary to add some code to the page. So you will need to do that from the vscode editor with the power page code.
 
-Now, you need to add the ceremony to the Power Pages form. Consider that  to run the power automate flow one the submission of a form  its necessary to add some code to the page. So you will need to do that from the vscode editor with the power page code.
+#### 7.1 Open power pages with the vscode editor
 
-#### 6.1 Open power pages with the vscode editor
 1. From the left-hand menu bar, click on **"Pages"**. Here you can see all the pages of the site. You can add many pages as you want and all the things you need using the power pages editor. But to run the power automate flow one the submission of a form  its necessary to add some code to the page. 
+
+    ![Edit Code](/images/powerpages/show-pages.png)
+
 
 2. Select Edit code. This will open the vscode editor with the power page code, opening the home page (what you were seeing before you clicked on edit code).
 
-![Edit Code](/images/powerpages/click-edit-code.png)
-![Edit Code](/images/powerpages/vscode-opened.png)
+    ![Edit Code](/images/powerpages/vscode-opened.png)
 
 
-#### 6.2 Add the ceremony to the Power Pages form
+#### 7.2 Add the ceremony to the Power Pages form
 
-Now you will need to add the code to the page with the form and to run the power automate flow one the submission of a form. But you can do it with this code:
+Now in the vscode editor, specifically in the Home.html file you will need to add the following code. It is adding a form to run the power automate flow one the submission of a form.  You can add the entire code and then replace the _url with the flow URL (from the Step 5) or you can add the code step by step.
 
 ```html
 <div class="row sectionBlockLayout text-start" style="display: flex; flex-wrap: wrap; margin: 0; min-height: auto; padding: 8px; justify-content: center;">
@@ -252,12 +258,12 @@ Now you will need to add the code to the page with the form and to run the power
       
       <!-- Title -->
       <h2 style="text-align: center; margin-bottom: 16px;">
-        Employee Contracts Form
+        Customer Agreement Form
       </h2>
 
       <!-- Description -->
       <p style="text-align: center; margin-bottom: 24px;">
-        Please fill out the form below. We'll use this information to generate or request an employee contract.
+        Please fill out the form below. We'll use this information to generate or request an customer agreement.
       </p>
 
       <!-- Form -->
@@ -324,8 +330,8 @@ Now you will need to add the code to the page with the form and to run the power
 
       var data = {}
 
-      data["recipientName"] = name
-      data["recipientEmail"] = email
+      data["customerName"] = name
+      data["customerEmail"] = email
 
       var payload = {}
       payload.eventData = JSON.stringify(data)
@@ -352,7 +358,7 @@ Now you will need to add the code to the page with the form and to run the power
       })
       .fail(function (error) {
         console.log("error: ", error);
-        alert("Something went wrrong.");
+        alert("Something went wrong.");
       });
     });
   });
@@ -360,9 +366,22 @@ Now you will need to add the code to the page with the form and to run the power
 ```
 
 1. Copy and paste the code in the vscode editor.
+
 2. Replace the _url with the flow URL (from the Step 5)
 
     ![Add Ceremony](/images/powerpages/vscode-edit-url.png)
+
+    **Important:**
+    Note that inside the script the following code is used to define the inputs to the power automate flow:
+
+    ```javascript
+    var data = {}
+
+    data["customerName"] = name
+    data["customerEmail"] = email
+    ```
+
+    This is the data that will be sent to the power automate flow, and it has to be named as the inputs defined in the flow (from the Step 3.2.1). If you change the name or add more inputs in the Step 3.2.1, you will need to change the name or add the new variables in the script.
 
 3. Save the file and refresh the power pages page.
 
@@ -371,13 +390,14 @@ Now you will need to add the code to the page with the form and to run the power
     ![Add Ceremony](/images/powerpages/vscode-with-form.png)
 
 
-### Step 7: Test Your Automation
+### Step 8: Test Your Automation
 
 Finally, test the entire process end-to-end.
 
 1. Go back to power pages. You can see the form you created in the home page. Click on the preview button and select the Desktop option.
 
     ![Add Ceremony](/images/powerpages/click-preview.png)
+
 2. Fill the form and click on the submit button. You will have to wait a few seconds and you will see the ceremony embedded in the page.
 
     ![Add Ceremony](/images/powerpages/preview-form.png)
