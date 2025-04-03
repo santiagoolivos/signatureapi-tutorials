@@ -1,17 +1,16 @@
 ---
-title: Notify and Save signed Documents using Slack, Sharepoint and SignatureAPI with Microsoft Power Automate
+title: Save and notify when signed documents are saved in Sharepoint with SignatureAPI and Microsoft Power Automate   
 ---
 
 ## Overview
 
-This tutorial demonstrates how to save signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate.
+This tutorial demonstrates how to save signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate. This tutorial is for Sharepoint Online, but the same flow can be used for any other type of files administration, like OneDrive, Azure Blob Storage, etc.
 
 ### What You’ll Learn
 
 * How to trigger a flow with a signatureAPI trigger.
 * How to save signed documents in Sharepoint with the Microsoft Power Automate connector. 
-
-This tutorial is for Sharepoint Online, but the same flow can be used for any other type of files administration, like OneDrive, Azure Blob Storage, etc.
+* How to notify when signed documents are saved in Sharepoint with the Outlook connector.
 
 ### The Problem
 
@@ -29,6 +28,7 @@ Automation helps HR teams stay on top of signature issues by:
 
 * Monitoring contract delivery and signature status in real time.
 * Automatically detecting when the document is completed.
+* Automatically saving the signed document in the correct Sharepoint folder.
 * Instantly notifying the HR team on Slack when the document is completed.
 * Reducing manual follow-ups and delays in the onboarding or document signing process.
 
@@ -39,92 +39,81 @@ Before starting, make sure you have:
 * **Power Automate** – To build workflows.
 * **SignatureAPI account** – For electronic signatures.
 * **Sharepoint Online** – To save the signed document.
-* **Slack Account** – For notifications.
+* **Outlook Account** – For notifications.
 
 ## Flow Overview
 
 The automation process follows these steps:
 
 1. **Trigger:** SignatureAPI trigger starts the flow. In this case, the trigger is when the deliverable is generated. 
-2. **Notify Slack:** Send a notification to Slack with the document details.
-3. **Save to Sharepoint:** Save the signed document in the correct Sharepoint folder.
+2. **Save to Sharepoint:** Save the signed document in the correct Sharepoint folder.
+3. **Notify HR:** Send a notification to the HR team with the document details.
 
 Here’s what your final Power Automate flow will look like:
 
-> Screenshot of the completed flow
+![Flow](/images/powerautomate/save-deliverables-sharepoint-flow/complete-flow.png)
 
 ## Step-by-Step Tutorial
 
-Follow these steps to automate the process of handling errors with SignatureAPI and Microsoft Power Automate.
+Follow these steps to automate the process of saving signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate.
 
-### Step 1: Create the Slack Channel
-
-First, create a Slack channel to receive the notifications.
-
-
-1. Go to **Slack** and create a new channel.
-2. Click **"Create Channel"**.
-
-   ![Slack Channel](/images/slack/create-channel.png)
-
-3. Name the channel and click **"Create"** (make it public or private depending on your needs).
-
-   ![Slack Channel](/images/slack/name-channel.png)
-
-
-### Step 2: Set Up the Power Automate Flow
+### Step 1: Set Up the Power Automate Flow
 
 Now, create the automated workflow in Power Automate, triggered by the SignatureAPI trigger.
 
-#### 2.1 Configure the Trigger
+#### 1.1 Configure the Trigger
 
 First, set the flow trigger, in this case with the SignatureAPI trigger for the deliverable generation.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
-2. Choose the trigger **"When a deliverable is generated"** (SignatureAPI).
+2. Name the flow and choose the trigger **"When a deliverable is generated"** (from the SignatureAPI connector).
 
-#### 2.2 Retrieve the Signed Contract
+    ![Trigger](/images/powerautomate/save-deliverables-sharepoint-flow/trigger.png)
 
-Once signed, automatically retrieve the completed document.
+#### 1.2 Retrieve the Signed Contract
 
-1. Add **"Get a Deliverable"** action from the SignatureAPI connector.
+Retrieve the completed document.
+
+1. Add **"Get a Deliverable"** action.
 2. Select the correct **Deliverable ID** from dynamic content.
 
-> *Include annotated screenshot of deliverable retrieval.*
+    ![Get deliverable](/images/powerautomate/save-deliverables-sharepoint-flow/get-deliverable.png)
 
-
-#### 2.3 Save the Signed Contract to Sharepoint
+#### 1.3 Save the Signed Contract to Sharepoint
 
 Save the signed document for record-keeping.
 
 1. Add **"Create File"** action (Sharepoint connector).
-2. Set the destination folder and filename (ending in `.pdf`).
-3. Map **File Content** from the deliverable.
+2. Select the **Site Address** and **Folder Path**.
+3. Set the **File Name** (ending in `.pdf`).
+4. Map **File Content** from the deliverable.
 
-> *Include annotated screenshot of file saving.*
+    ![Save file](/images/powerautomate/save-deliverables-sharepoint-flow/save-file.png)
 
-#### 2.4 Send the notification to Slack
 
-Next, send the notification to Slack with the Microsoft Power Automate connector.
+#### 1.4 Send the notification to the specific department
 
-1. Add the action **"Post message"** from the Slack connector.
-2. Select your Slack channel and the message from Dynamic Content.
-3. Add the Dynamic Content from the SignatureAPI trigger.
+Next, send the notification to the specific department with the Outlook connector.
 
-### Step 3: Test Your Automation
+1. Add the action **"Send an email"** from the Microsoft Outlook connector.
+2. In the **"To"** field, add the email address of the department that will receive the notification.
+Attach the signed contract file from dynamic content. Ensure to use the **"File Content"** from the **"Get a Deliverable"** action, and filename (ending in `.pdf`).
+
+   ![Send email](/images/powerautomate/save-deliverables-sharepoint-flow/send-email.png)
+
+### Step 2: Test Your Automation
 
 Finally, test the entire process end-to-end.
 
 1. Save your Power Automate flow.
-2. Sign the document.
-3. Verify:
-  - Slack notification is received.
-  - The signed document is saved in the correct Sharepoint folder.
+2. Create a new envelope with the topic "sales-department".
+3. Sign the document.
+4. Verify:
+  - Email notification is received by the specific department.
 
 *Use the following checklist:*
 
-- [ ] Slack notification is received.
-- [ ] The signed document is saved in the correct Sharepoint folder.
+- [ ] Email notification is received by the specific department.
 
 ## Troubleshooting & FAQ
 

@@ -231,8 +231,9 @@ Once signed, automatically retrieve the completed document.
 Save the signed document for record-keeping.
 
 1. Add **"Create File"** action (Sharepoint connector).
-2. Set the destination folder and filename (ending in `.pdf`).
-3. Map **File Content** from the deliverable.
+2. Select the **Site Address** and **Folder Path**.
+3. Set the **File Name** (ending in `.pdf`).
+4. Map **File Content** from the deliverable.
 
     ![Save file](/images/powerautomate/sharepoint-list-flow/save-file.png)
 
