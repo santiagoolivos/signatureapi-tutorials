@@ -93,9 +93,9 @@ Next, send the notification to the specific department with the Outlook connecto
 
 1. Add the action **"Send an email"** from the Microsoft Outlook connector.
 2. In the **"To"** field, add the email address of the department that will receive the notification.
-3. In the rest of the fields, add the dynamic content from the SignatureAPI trigger.
+Attach the signed contract file from dynamic content. Ensure to use the **"File Content"** from the **"Get a Deliverable"** action, and filename (ending in `.pdf`).
 
-    ![Send email](/images/powerautomate/filter-webhooks-flow/send-email.png)
+   ![Send email](/images/powerautomate/filter-webhooks-flow/send-email.png)
 
 ### Step 2: Test Your Automation
 

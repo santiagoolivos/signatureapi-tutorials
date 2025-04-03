@@ -63,7 +63,7 @@ First, create a Slack channel to receive the notifications.
 
    ![Slack Channel](/images/slack/create-channel.png)
 
-3. Name the channel and click **"Create"** (make it public or private depending on your needs).
+3. Name (e.g. "bounced-emails") the channel and click **"Create"** (make it public or private depending on your needs).
 
    ![Slack Channel](/images/slack/name-channel.png)
 
@@ -79,14 +79,26 @@ First, set the flow trigger, in this case with the SignatureAPI trigger for the 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
 2. Choose the trigger **"When a recipient bounces"** (SignatureAPI).
 
+   ![Trigger](/images/powerautomate/handle-errors-flow/trigger.png)
+
 
 #### 2.2 Send the notification to Slack
 
 Next, send the notification to Slack with the Microsoft Power Automate connector.
 
-1. Add the action **"Post message"** from the Slack connector.
+1. Add the action **"Post message"** from the Slack connector. You will need to authorize the Slack connector with your Slack account.
+
+    ![Slack connector](/images/powerautomate/handle-errors-flow/post-message-slack.png)
+
+    ![Slack connector](/images/powerautomate/handle-errors-flow/authorize-slack.png)
+
+
 2. Select your Slack channel and the message from Dynamic Content.
+
 3. Add the Dynamic Content from the SignatureAPI trigger.
+
+    ![Slack connector](/images/powerautomate/handle-errors-flow/set-message.png)
+
 
 
 ### Step 3: Test Your Automation
