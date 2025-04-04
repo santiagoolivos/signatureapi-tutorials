@@ -139,4 +139,4 @@ Finally, test the entire process end-to-end.
 
 By completing this tutorial, you've successfully automated the process of filtering webhooks notifications with SignatureAPI and Microsoft Power Automate and notify the specific department via email. This efficient workflow frees your team from manual follow-ups and filters the notifications for the specific department.
 
-**Happy automating!**
+**Happy Automating!**

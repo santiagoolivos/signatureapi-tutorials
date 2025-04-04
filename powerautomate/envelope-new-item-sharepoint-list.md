@@ -1,15 +1,15 @@
 ---
-title: Automating Employment Contracts with Sharepoint List, SignatureAPI and Microsoft Power Automate
+title: Automating Employment Contracts with SharePoint List, SignatureAPI and Microsoft Power Automate
 ---
 
 ## Overview
 
-This tutorial demonstrates how to streamline the employment contract process by automatically sending, signing, and storing contracts. By integrating  **Sharepoint List** (for storing the onboarding pack with the employee details), **SignatureAPI connector** (for electronic signatures), and the **Power Automate** (for approval-and-signature workflow), you can eliminate manual errors and delays in onboarding new employees.
+This tutorial demonstrates how to streamline the employment contract process by automatically sending, signing, and storing contracts. By integrating  **SharePoint List** (for storing the onboarding pack with the employee details), **SignatureAPI connector** (for electronic signatures), and the **Power Automate** (for approval-and-signature workflow), you can eliminate manual errors and delays in onboarding new employees.
 
 ### What You’ll Learn
 
-* How to trigger a flow with a new Sharepoint List item.
-* Retrieving and pre-filling a DOCX contract template from Sharepoint List.
+* How to trigger a flow with a new SharePoint List item.
+* Retrieving and pre-filling a DOCX contract template from SharePoint List.
 * Creating and sending a signature envelope using SignatureAPI.
 * Monitoring the signing process and retrieving the signed document.
 * Saving the signed contract and notifying HR automatically.
@@ -37,18 +37,18 @@ Before starting, make sure you have:
 
 * **Power Automate** – To build workflows.
 * **SignatureAPI account** – For electronic signatures.
-* **Sharepoint List** – For storing the onboarding pack with the employee details.
+* **SharePoint List** – For storing the onboarding pack with the employee details.
 * **Outlook** – For sending notifications (other email providers also work).
 
 ## Flow Overview
 
 The automation process follows these steps:
 
-1. **Trigger:** New Sharepoint List item creation starts the flow.
-2. **Data Retrieval:** Get onboarding pack with employee details and fetch the contract template from Sharepoint List.
+1. **Trigger:** New SharePoint List item creation starts the flow.
+2. **Data Retrieval:** Get onboarding pack with employee details and fetch the contract template from SharePoint List.
 3. **Signature Process:** Create an envelope via SignatureAPI, add recipient details, and attach the DOCX.
 4. **Monitoring:** Wait for the contract to be signed.
-5. **Storage & Notification:** Save the signed document in Sharepoint and notify HR via email.
+5. **Storage & Notification:** Save the signed document in SharePoint and notify HR via email.
 
 
 This process automates envelope creation and sending when a new item with an attachment is added to the SharePoint List.
@@ -59,7 +59,7 @@ Here’s what your final Power Automate flow will look like:
 
 ## Step-by-Step Tutorial
 
-Follow these steps to automate your employment contract process using Sharepoint List, SignatureAPI, and Microsoft Power Automate:
+Follow these steps to automate your employment contract process using SharePoint List, SignatureAPI, and Microsoft Power Automate:
 
 ### Step 1: Prepare the Contract Template
 
@@ -89,15 +89,15 @@ First, create or update your employment contract template by adding placeholders
 
 ![Word Template Example](/images/word/employee-template.png)
 
-### Step 2: Create the Sharepoint List
+### Step 2: Create the SharePoint List
 
-First, create a Sharepoint List to store the employee details.
+First, create a SharePoint List to store the employee details.
 
 1. Visit [Microsoft Lists](https://www.microsoft.com/en-us/microsoft-365/microsoft-lists) and sign in.
 2. Click on **"New List"** and then click on **"Blank List"**.
 
     ![New List](/images/sharepoint-lists/new-list.png)
-3. Rename the list, and save it to the Sharepoint Site.
+3. Rename the list, and save it to the SharePoint Site.
     
     ![Rename List](/images/sharepoint-lists/rename-list.png)
 4. Hide the Title column and add the following ones:
@@ -112,32 +112,32 @@ First, create a Sharepoint List to store the employee details.
 
 ### Step 3: Set Up the Power Automate Flow
 
-Now, create the automated workflow in Power Automate, triggered whenever a new item with an attachment is added to the Sharepoint List.
+Now, create the automated workflow in Power Automate, triggered whenever a new item with an attachment is added to the SharePoint List.
 
 #### 3.1 Configure the Trigger
 
-First, set the flow trigger to run whenever a new item with is added to the Sharepoint List.
+First, set the flow trigger to run whenever a new item with is added to the SharePoint List.
 
 1. Go to **Power Automate** and select **Automated Cloud Flow**.
-2. Add Trigger. Name your flow, select **"When an item is created"** from the Sharepoint connector, and then click **Create**.
+2. Add Trigger. Name your flow, select **"When an item is created"** from the SharePoint connector, and then click **Create**.
 
     ![Trigger](/images/powerautomate/sharepoint-list-flow/trigger.png)
 3. Select the Site Address and the list you created earlier.
 
     ![Select List](/images/powerautomate/sharepoint-list-flow/select-list.png)
 
-#### 3.2 Retrieve Employee Details from Sharepoint List
+#### 3.2 Retrieve Employee Details from SharePoint List
 
-Next, retrieve the employee details from the Sharepoint List.
+Next, retrieve the employee details from the SharePoint List.
 
-1. Add the action **"Get attachments"** from the Sharepoint connector.
+1. Add the action **"Get attachments"** from the SharePoint connector.
 2. Select the Site Address, List Name and Item ID from the previous step with dynamic content.
 
     ![Get Attachments](/images/powerautomate/sharepoint-list-flow/get-attachments.png)
 
 #### 3.3 Get file content
 
-1. Add the **"Get file content"** action from the Sharepoint connector.
+1. Add the **"Get file content"** action from the SharePoint connector.
 2. Select the Site Address.
 3. Add to the File Identifier the ID from the **Get attachments** step with dynamic content.
     
@@ -226,11 +226,11 @@ Once signed, automatically retrieve the completed document.
 
     ![Get deliverable](/images/powerautomate/sharepoint-list-flow/get-deliverable.png)
 
-#### 5.3 Save the Signed Contract to Sharepoint
+#### 5.3 Save the Signed Contract to SharePoint
 
 Save the signed document for record-keeping.
 
-1. Add **"Create File"** action (Sharepoint connector).
+1. Add **"Create File"** action (SharePoint connector).
 2. Select the **Site Address** and **Folder Path**.
 3. Set the **File Name** (ending in `.pdf`).
 4. Map **File Content** from the deliverable.
@@ -252,18 +252,18 @@ Automatically inform HR that the contract has been signed and saved.
 Finally, test the entire process end-to-end.
 
 1. Save your Power Automate flow.
-2. Create a new item in the Sharepoint List. Ensure to attach the DOCX template to the item.
+2. Create a new item in the SharePoint List. Ensure to attach the DOCX template to the item.
 3. Verify:
   - Contract is sent to the employee.
   - Signature process initiates correctly.
-  - Signed contract saves successfully in Sharepoint.
+  - Signed contract saves successfully in SharePoint.
   - HR receives an email notification with the signed contract attached.
 
 *Use the following checklist:*
 
 - [ ] Contract sent successfully.
 - [ ] Employee receives and signs contract.
-- [ ] Signed document stored correctly in Sharepoint.
+- [ ] Signed document stored correctly in SharePoint.
 - [ ] HR receives email notification with attachment.
 
 ## Troubleshooting & FAQ
@@ -272,7 +272,7 @@ Finally, test the entire process end-to-end.
 
 - **API Key Errors:** Ensure your SignatureAPI key is correct and authenticated.
 - **Dynamic Content Mapping:** Double-check placeholder naming in your DOCX file matches exactly with dynamic content mappings.
-- **File Access Issues:** Verify permissions and file paths in Sharepoint.
+- **File Access Issues:** Verify permissions and file paths in SharePoint.
 
 ### Frequently Asked Questions:
 
@@ -291,11 +291,11 @@ Finally, test the entire process end-to-end.
 ## Additional Resources
 
 - [SignatureAPI Documentation](https://signatureapi.com/docs)
-- [Microsoft Sharepoint List Documentation](https://www.microsoft.com/en-us/microsoft-365/microsoft-lists)
+- [Microsoft SharePoint List Documentation](https://www.microsoft.com/en-us/microsoft-365/microsoft-lists)
 - [Power Automate Community](https://powerusers.microsoft.com/t5/Microsoft-Power-Automate/ct-p/MPACommunity)
 
 ## Conclusion
 
 By completing this tutorial, you've successfully automated the process of sending, signing, and managing employment contracts. This efficient workflow frees your HR team from repetitive tasks and ensures new employees have a smooth onboarding experience.
 
-**Happy automating!**
+**Happy Automating!**

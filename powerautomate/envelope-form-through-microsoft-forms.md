@@ -290,4 +290,4 @@ Finally, test the entire process end-to-end.
 
 By completing this tutorial, you've successfully automated the process of sending, signing, and managing employment contracts. This efficient workflow frees your HR team from repetitive tasks and ensures new employees have a smooth onboarding experience.
 
-**Happy automating!**
+**Happy Automating!**

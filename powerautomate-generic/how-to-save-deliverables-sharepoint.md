@@ -1,23 +1,23 @@
 ---
-title: Save and notify when signed documents are saved in Sharepoint with SignatureAPI and Microsoft Power Automate   
+title: Save and notify when signed documents are saved in SharePoint with SignatureAPI and Microsoft Power Automate   
 ---
 
 ## Overview
 
-This tutorial demonstrates how to save signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate. This tutorial is for Sharepoint Online, but the same flow can be used for any other type of files administration, like OneDrive, Azure Blob Storage, etc.
+This tutorial demonstrates how to save signed documents in SharePoint with SignatureAPI and Microsoft Power Automate. This tutorial is for SharePoint Online, but the same flow can be used for any other type of files administration, like OneDrive, Azure Blob Storage, etc.
 
 ### What You’ll Learn
 
 * How to trigger a flow with a signatureAPI trigger.
-* How to save signed documents in Sharepoint with the Microsoft Power Automate connector. 
-* How to notify when signed documents are saved in Sharepoint with the Outlook connector.
+* How to save signed documents in SharePoint with the Microsoft Power Automate connector. 
+* How to notify when signed documents are saved in SharePoint with the Outlook connector.
 
 ### The Problem
 
 In HR departments, it's common to send important documents like employment contracts, policy acknowledgements, or tax forms for electronic signature. However, sometimes:
 
 * Difficult to know when the document is completed.
-* The signed document is not saved in the correct Sharepoint folder.
+* The signed document is not saved in the correct SharePoint folder.
 
 When these issues happen, HR teams often don’t notice immediately, which leads to delays in onboarding or compliance processes.
 
@@ -28,7 +28,7 @@ Automation helps HR teams stay on top of signature issues by:
 
 * Monitoring contract delivery and signature status in real time.
 * Automatically detecting when the document is completed.
-* Automatically saving the signed document in the correct Sharepoint folder.
+* Automatically saving the signed document in the correct SharePoint folder.
 * Instantly notifying the HR team on Slack when the document is completed.
 * Reducing manual follow-ups and delays in the onboarding or document signing process.
 
@@ -38,7 +38,7 @@ Before starting, make sure you have:
 
 * **Power Automate** – To build workflows.
 * **SignatureAPI account** – For electronic signatures.
-* **Sharepoint Online** – To save the signed document.
+* **SharePoint Online** – To save the signed document.
 * **Outlook Account** – For notifications.
 
 ## Flow Overview
@@ -46,7 +46,7 @@ Before starting, make sure you have:
 The automation process follows these steps:
 
 1. **Trigger:** SignatureAPI trigger starts the flow. In this case, the trigger is when the deliverable is generated. 
-2. **Save to Sharepoint:** Save the signed document in the correct Sharepoint folder.
+2. **Save to SharePoint:** Save the signed document in the correct SharePoint folder.
 3. **Notify HR:** Send a notification to the HR team with the document details.
 
 Here’s what your final Power Automate flow will look like:
@@ -55,7 +55,7 @@ Here’s what your final Power Automate flow will look like:
 
 ## Step-by-Step Tutorial
 
-Follow these steps to automate the process of saving signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate.
+Follow these steps to automate the process of saving signed documents in SharePoint with SignatureAPI and Microsoft Power Automate.
 
 ### Step 1: Set Up the Power Automate Flow
 
@@ -79,11 +79,11 @@ Retrieve the completed document.
 
     ![Get deliverable](/images/powerautomate/save-deliverables-sharepoint-flow/get-deliverable.png)
 
-#### 1.3 Save the Signed Contract to Sharepoint
+#### 1.3 Save the Signed Contract to SharePoint
 
 Save the signed document for record-keeping.
 
-1. Add **"Create File"** action (Sharepoint connector).
+1. Add **"Create File"** action (SharePoint connector).
 2. Select the **Site Address** and **Folder Path**.
 3. Set the **File Name** (ending in `.pdf`).
 4. Map **File Content** from the deliverable.
@@ -137,11 +137,11 @@ Finally, test the entire process end-to-end.
 
 - [SignatureAPI Documentation](https://signatureapi.com/docs)
 - [Slack Documentation](https://slack.com)
-- [Sharepoint Documentation](https://support.microsoft.com/sharepoint)
+- [SharePoint Documentation](https://support.microsoft.com/sharepoint)
 - [Power Automate Community](https://powerusers.microsoft.com/t5/Microsoft-Power-Automate/ct-p/MPACommunity)
 
 ## Conclusion
 
-By completing this tutorial, you've successfully automated the process of notifying with Slack and saving signed documents in Sharepoint with SignatureAPI and Microsoft Power Automate. This efficient workflow frees your HR team from manual follow-ups and delays in the onboarding or document signing process.
+By completing this tutorial, you've successfully automated the process of notifying with Slack and saving signed documents in SharePoint with SignatureAPI and Microsoft Power Automate. This efficient workflow frees your HR team from manual follow-ups and delays in the onboarding or document signing process.
 
-**Happy automating!**
+**Happy Automating!**

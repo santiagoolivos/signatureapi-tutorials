@@ -1,10 +1,10 @@
 ---
-title: Automating Employment Contracts and Storing data in Microsoft Dataverse with Microsoft Forms, SignatureAPI and Microsoft Power Automate.
+title: Automating Employment Contracts and Storing Data in Microsoft Dataverse with Microsoft Forms, SignatureAPI and Microsoft Power Automate.
 ---
 
 ## Overview
 
-This tutorial demonstrates how to streamline the employment contract process by automatically sending, signing, and storing contracts. By integrating **Microsoft Forms** (for data collection), **OneDrive** (for storing contract pdf form), the **SignatureAPI connector** (for electronic signatures with form inputs), and **Microsoft Dataverse** (for storing the employee details from the form and signature completion), you can eliminate manual errors and delays in onboarding new employees.
+This tutorial demonstrates how to streamline the employment contract process by automatically sending, signing, and storing contracts. By integrating **Microsoft Forms** (for data collection), **OneDrive** (for storing contract PDF form), the **SignatureAPI connector** (for electronic signatures with form inputs), and **Microsoft Dataverse** (for storing the employee details from the form and signature completion), you can eliminate manual errors and delays in onboarding new employees.
 
 
 ### What You’ll Learn
@@ -14,7 +14,7 @@ This tutorial demonstrates how to streamline the employment contract process by 
 * Creating and sending a signature envelope using SignatureAPI for two recipients.
 * Capturing data from text input fields in the signature process.
 * Monitoring the signing process and retrieving the signed document.
-* Saving the signed contract, adding a row to a Dataverse table and notifying HR automatically.
+* Saving the signed contract, adding a row to a Dataverse table and automatically notifying HR.
 
 ### The Problem
 
@@ -30,7 +30,7 @@ Automation simplifies this process by:
 
 * Automatically sending contracts upon form submission.
 * Using templates pre-filled with employee details.
-* Using the Signatureapi form to capture data from the signature process and then add a row to a Dataverse table.
+* Using the SignatureAPI form to capture data from the signature process and then add a row to a Dataverse table.
 * Tracking signature status and storing documents automatically.
 * Informing HR instantly once contracts are signed.
 
@@ -109,7 +109,7 @@ First, create a Microsoft Form to collect necessary employee details (First Name
 1. Visit [Microsoft Forms](https://forms.office.com) and sign in.
 2. Click **"New Form"**.
 ![New Form](/images/forms/new-form.png)
-3. Name the form and add these required questions:
+3. Name the form and add the following required questions:
   - **First Name** (Text, required)
   - **Last Name** (Text, required)
   - **Email Address** (Text, required)
@@ -124,7 +124,7 @@ Create a Dataverse table to store the employee details from the form and signatu
 
 1. Go to [Power Apps](https://make.powerapps.com) and sign in.
 2. From the left menu click on **"Tables"**.
-3. Click on the **Start with a blank table** button.
+3. Click the **Start with a blank table** button.
 
     ![Start with a blank table](/images/dataverse/start-with-blank.png)
       
@@ -243,7 +243,7 @@ Specify where the employer should fill the salary amount.
 1. Add **"Add a Place – Text Input"** action and rename it to **"Add a Place – Salary Input"**.
 2. Use the placeholder (e.g., `[[salary_input]]`) from your DOCX template.
 3. Set the **Recipient Key** using the **Add Recipient - Employer** action from the dynamic content. This will ensure that the salary amount is defined and completed in the signature process by the employer.
-4. From the advanced parameters, set the **"Capture As"** as "salary_input". This ensures that the salary amount is captured as text, and be able to get it later in the flow.
+4. From the advanced parameters, set the **"Capture As"** as "salary_input". This ensures that the salary amount is captured as text, and allows you to retrieve it later in the flow.
 
     ![Add place salary](/images/powerautomate/dataverse-flow/add-salary-input.png)
 
@@ -297,7 +297,7 @@ Now, add a row to the Dataverse table with the employee details and the captured
 
 1. Add **"Add a new row"** action from the Dataverse connector.
 2. Select the correct **Dataverse Table**, must be the same as the one defined earlier.
-3. From the **Advanced parameters** select the **"Fields"** to be mapped to the employee details and the captured salary amount from the dynamic content.
+3. From the **Advanced parameters**, select the **"Fields"** to be mapped to the employee details and the captured salary amount from the dynamic content.
     
     - Set the **First Name**, **Last Name** and **Email Address** from the form response details.
     - Set the **Salary Amount** from the captured value from the **Get a captured value** action.
@@ -391,4 +391,4 @@ Finally, test the entire process end-to-end.
 
 By completing this tutorial, you've successfully automated the process of sending, signing, and managing employment contracts. This efficient workflow frees your HR team from repetitive tasks and ensures new employees have a smooth onboarding experience.
 
-**Happy automating!**
+**Happy Automating!**

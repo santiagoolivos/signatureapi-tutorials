@@ -324,4 +324,4 @@ Finally, test the entire process end-to-end.
 
 By completing this tutorial, you've successfully automated the process of sending, signing, and managing sales proposals. This efficient workflow frees your sales team from repetitive tasks and ensures new clients have a smooth onboarding experience.
 
-**Happy automating!**
+**Happy Automating!**

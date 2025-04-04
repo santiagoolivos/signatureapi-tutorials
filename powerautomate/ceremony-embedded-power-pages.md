@@ -1,22 +1,22 @@
 ---
-title: Embed a Signature Ceremony in a Power Pages with SignatureAPI and Microsoft Power Automate
+title: Embed a Signature Ceremony in Power Pages with SignatureAPI and Microsoft Power Automate
 ---
 
 ## Overview
 
-This tutorial demonstrates how to embed a signature ceremony in a Power Pages with SignatureAPI and Microsoft Power Automate. By integrating **Power Pages** (for having a form and embedding the signature ceremony), **OneDrive** (for storing the template), and the **SignatureAPI connector** (for electronic signatures), you can automate the signature process from the Power Pages form.
+This tutorial demonstrates how to embed a signature ceremony in Power Pages with SignatureAPI and Microsoft Power Automate. By integrating **Power Pages** (for having a form and embedding the signature ceremony), **OneDrive** (for storing the template), and the **SignatureAPI connector** (for electronic signatures), you can automate the signature process from the Power Pages form.
 
 ### What You’ll Learn
 
 * How to trigger a flow with a new Power Pages form submission.
 * Retrieving and pre-filling a DOCX contract template from OneDrive.
 * Creating and sending a signature envelope using SignatureAPI.
-* Editing the Power Pages code to run the power automate flow from the submission of a form.
-* Embedding the signature ceremony in a Power Pages form.
+* Editing the Power Pages code to run the Power Automate flow from form submission.
+* Embedding the signature ceremony in Power Pages form.
 
 ### The Problem
 
-Many companies need to collect information from their customers and sign documents. But sometimes the process is not automated and the customer needs to sign the document manually. Also many companies wants  to have a more personalized signature process showed in its website, so they can have a better user experience.
+Many companies need to collect information from their customers and sign documents. But sometimes the process is not automated and the customer needs to sign the document manually. Also, many companies wants  to have a more personalized signature process showed on their website, so they can have a better user experience.
 
 * **Manual signature process** – the customer needs to sign the document manually.
 * **Not personalized** – the signature process is not personalized and the customer needs to sign the document in a different page than the one where the information is collected.
@@ -26,7 +26,7 @@ Many companies need to collect information from their customers and sign documen
 
 Automation simplifies this process by:
 
-* Automatically creating an embedding the signature ceremony in the Power Pages form.
+* Automatically creating an envelope and embedding the signature ceremony in the Power Pages form.
 
 ## Requirements
 
@@ -73,7 +73,7 @@ First, create or update your agreement template by adding placeholders for dynam
 > *Please review and sign your agreement below:*  
 > `[[customer_signature]]`
 
-5. Save your template and upload it to **Documents** in the **Sharepoint Site**.
+5. Save your template and upload it to **Documents** in the **SharePoint Site**.
 
 **Important:**
 - Ensure placeholder keys match exactly with what you'll use later in Power Automate.
@@ -168,7 +168,7 @@ Now, attach your contract template to the envelope and populate it with customer
 
 1. Add **"Add a Template – DOCX"** action.
 2. Set the **Envelope ID** from the dynamic content.
-3. Select **File Content** from the Sharepoint action.
+3. Select **File Content** from the SharePoint action.
 4. Set the **Document Title** (e.g., "Customer Agreement").
 5. Ensure your DOCX template uses placeholders (`{{customer.name}}`, etc.) and map each field to the corresponding dynamic content from the Power Apps initialized variables.
 
@@ -233,11 +233,11 @@ Create the ceremony for the customer with custom authentication. This will retur
 
 ### Step 7: Power Pages Form and Embedding Ceremony
 
-Now, you need to add the ceremony to the Power Pages form. Consider that  to run the power automate flow from the submission of a form, its necessary to add some code to the page. So you will need to do that from the vscode editor with the power page code.
+Now, you need to add the ceremony to the Power Pages form. Consider that  to run the Power Automate flow from the submission of a form, it's necessary to add some code to the page. So you will need to do that from the vscode editor with the power page code.
 
 #### 7.1 Open power pages with the vscode editor
 
-1. From the left-hand menu bar, click on **"Pages"**. Here you can see all the pages of the site. You can add many pages as you want and all the things you need using the power pages editor. But to run the power automate flow one the submission of a form  its necessary to add some code to the page. 
+1. From the left-hand menu bar, click on **"Pages"**. Here you can see all the pages of the site. You can add many pages as you want and all the things you need using the power pages editor. However, to run the Power Automate flow on form submission, it's necessary to add some code to the page. 
 
     ![Edit Code](/images/powerpages/show-pages.png)
 
@@ -249,7 +249,7 @@ Now, you need to add the ceremony to the Power Pages form. Consider that  to run
 
 #### 7.2 Add the ceremony to the Power Pages form
 
-Now in the vscode editor, specifically in the Home.html file you will need to add the following code. It is adding a form to run the power automate flow one the submission of a form.  You can add the entire code and then replace the _url with the flow URL (from the Step 5) or you can add the code step by step.
+Now in the vscode editor, specifically in the Home.html file you will need to add the following code. It is adding a form to run the Power Automate flow on form submission.  You can add the entire code and then replace the _url with the flow URL (from the Step 5) or you can add the code step by step.
 
 ```html
 <div class="row sectionBlockLayout text-start" style="display: flex; flex-wrap: wrap; margin: 0; min-height: auto; padding: 8px; justify-content: center;">
@@ -372,7 +372,7 @@ Now in the vscode editor, specifically in the Home.html file you will need to ad
     ![Add Ceremony](/images/powerpages/vscode-edit-url.png)
 
     **Important:**
-    Note that inside the script the following code is used to define the inputs to the power automate flow:
+    Note that inside the script the following code is used to define the inputs to the Power Automate flow:
 
     ```javascript
     var data = {}
@@ -381,11 +381,11 @@ Now in the vscode editor, specifically in the Home.html file you will need to ad
     data["customerEmail"] = email
     ```
 
-    This is the data that will be sent to the power automate flow, and it has to be named as the inputs defined in the flow (from the Step 3.2.1). If you change the name or add more inputs in the Step 3.2.1, you will need to change the name or add the new variables in the script.
+    This is the data that will be sent to the Power Automate flow, and it has to be named as the inputs defined in the flow (from the Step 3.2.1). If you change the name or add more inputs in the Step 3.2.1, you will need to change the name or add the new variables in the script.
 
 3. Save the file and refresh the power pages page.
 
-    This code have the form and when clicking on the submit button it will run the power automate flow and embed the ceremony in the power pages. Consider that it has some styles and a minimum logic and user friendly interface. You can improve it as you want.
+    This code have the form and when clicking on the submit button, it will run the Power Automate flow and embed the ceremony in the power pages. Consider that it has some styles and a minimum logic and user friendly interface. You can improve it as you want.
 
     ![Add Ceremony](/images/powerpages/vscode-with-form.png)
 
@@ -394,7 +394,7 @@ Now in the vscode editor, specifically in the Home.html file you will need to ad
 
 Finally, test the entire process end-to-end.
 
-1. Go back to power pages. You can see the form you created in the home page. Click on the preview button and select the Desktop option.
+1. Go back to power pages. You can see the form you created on the home page. Click on the preview button and select the Desktop option.
 
     ![Add Ceremony](/images/powerpages/click-preview.png)
 
@@ -425,7 +425,7 @@ Finally, test the entire process end-to-end.
 
 ### Frequently Asked Questions:
 
-- *What if the ceremony isn't showed?*  
+- *What if the ceremony isn't shown?*  
   Check the browser logs, it will show you the error. Also check if the flow is running correctly.
 - *Can I adapt this for other document types?*  
   Yes, this method is adaptable for any automated document-signing workflow.
@@ -446,6 +446,6 @@ Finally, test the entire process end-to-end.
 
 ## Conclusion
 
-By completing this tutorial, you have learned how to embed a ceremony in a Power Pages with SignatureAPI and Microsoft Power Automate.
+By completing this tutorial, you have learned how to embed a ceremony in Power Pages with SignatureAPI and Microsoft Power Automate.
 
-**Happy automating!**
+**Happy Automating!**

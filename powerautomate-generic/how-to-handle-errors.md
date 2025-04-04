@@ -142,4 +142,4 @@ Finally, test the entire process end-to-end.
 
 By completing this tutorial, you've successfully automated the process of handling errors with SignatureAPI and Microsoft Power Automate. This efficient workflow frees your HR team from manual follow-ups and delays in the onboarding or document signing process.
 
-**Happy automating!**
+**Happy Automating!**
