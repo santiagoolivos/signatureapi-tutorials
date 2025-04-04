@@ -75,7 +75,7 @@ First, set the flow trigger, in this case with the SignatureAPI trigger for the 
 Retrieve the completed document.
 
 1. Add **"Get a Deliverable"** action.
-2. Select the correct **Deliverable ID** from dynamic content.
+2. Select the correct **Deliverable ID** using dynamic content.
 
     ![Get deliverable](/images/powerautomate/save-deliverables-sharepoint-flow/get-deliverable.png)
 

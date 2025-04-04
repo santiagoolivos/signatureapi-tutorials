@@ -93,9 +93,9 @@ Next, send the notification to Slack with the Microsoft Power Automate connector
     ![Slack connector](/images/powerautomate/handle-errors-flow/authorize-slack.png)
 
 
-2. Select your Slack channel and the message from Dynamic Content.
+2. Select the **Channel Name**.
 
-3. Add the Dynamic Content from the SignatureAPI trigger.
+3. Set the **Message** using the Dynamic Content from the SignatureAPI trigger.
 
     ![Slack connector](/images/powerautomate/handle-errors-flow/set-message.png)
 

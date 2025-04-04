@@ -131,7 +131,7 @@ First, set the flow trigger to run whenever a new item with is added to the Shar
 Next, retrieve the employee details from the Sharepoint List.
 
 1. Add the action **"Get attachments"** from the Sharepoint connector.
-2. Select the Site Address, List Name and Item ID from the previous step with Dynamic Content.
+2. Select the Site Address, List Name and Item ID from the previous step with dynamic content.
 
     ![Get Attachments](/images/powerautomate/sharepoint-list-flow/get-attachments.png)
 
@@ -139,7 +139,7 @@ Next, retrieve the employee details from the Sharepoint List.
 
 1. Add the **"Get file content"** action from the Sharepoint connector.
 2. Select the Site Address.
-3. Add to the File Identifier the ID from the **Get attachments** step with Dynamic Content.
+3. Add to the File Identifier the ID from the **Get attachments** step with dynamic content.
     
     ![Get file content](/images/powerautomate/sharepoint-list-flow/get-file.png)
 
@@ -188,9 +188,9 @@ Now, attach your contract template to the envelope and populate it with employee
 Specify where the employee should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Set the **Document ID** from the dynamic content.
+2. Set the **Document ID** using dynamic content.
 3. Use the placeholder (e.g., `[[employee_signature]]`) from your DOCX template.
-4. Set the **Recipient Key** from the dynamic content.
+4. Set the **Recipient Key** using dynamic content.
 
     ![Add signature](/images/powerautomate/sharepoint-list-flow/add-signature.png)
 
@@ -200,7 +200,7 @@ Specify where the employee should sign on the document.
 Trigger the sending of your envelope to the employee for signing.
 
 1. Add **"Start Envelope"** action from the SignatureAPI connector.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Select the appropriate **Envelope ID** using dynamic content.
 
     ![Start envelope](/images/powerautomate/sharepoint-list-flow/start-envelope.png)
 
@@ -222,7 +222,7 @@ Pause the flow until the employee signs the contract.
 Once signed, automatically retrieve the completed document.
 
 1. Add **"Get a Deliverable"** action from the SignatureAPI connector.
-2. Select the correct **Deliverable ID** from dynamic content.
+2. Select the correct **Deliverable ID** using dynamic content.
 
     ![Get deliverable](/images/powerautomate/sharepoint-list-flow/get-deliverable.png)
 

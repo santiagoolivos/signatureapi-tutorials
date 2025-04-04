@@ -182,9 +182,9 @@ Now, attach your contract template to the envelope and populate it with employee
 Specify where the employee should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Set the **Document ID** from the dynamic content.
+2. Set the **Document ID** using dynamic content.
 3. Use the placeholder (e.g., `[[employee_signature]]`) from your DOCX template.
-4. Set the **Recipient Key** from the dynamic content.
+4. Set the **Recipient Key** using dynamic content.
 
     ![Add signature](/images/powerautomate/forms-flow/add-signature.png)
 
@@ -193,7 +193,7 @@ Specify where the employee should sign on the document.
 Trigger the sending of your envelope to the employee for signing.
 
 1. Add **"Start Envelope"** action.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Select the appropriate **Envelope ID** using dynamic content.
 
     ![Start envelope](/images/powerautomate/forms-flow/start-envelope.png)
 
@@ -206,7 +206,7 @@ Next, configure your flow to wait for the signing to complete, retrieve the sign
 Pause the flow until the employee signs the contract.
 
 1. Add **"Wait for Envelope Completion"** action.
-2. Select the correct **Envelope ID**.
+2. Select the correct **Envelope ID** using dynamic content.
 
     ![Wait for envelope completion](/images/powerautomate/forms-flow/wait-envelope.png)
 
@@ -215,7 +215,7 @@ Pause the flow until the employee signs the contract.
 Once signed, automatically retrieve the completed document.
 
 1. Add **"Get a Deliverable"** action.
-2. Select the correct **Deliverable ID** from dynamic content.
+2. Select the correct **Deliverable ID** using dynamic content.
 
     ![Get deliverable](/images/powerautomate/forms-flow/get-deliverable.png)
 
@@ -224,7 +224,7 @@ Once signed, automatically retrieve the completed document.
 Save the signed document for record-keeping.
 
 1. Add **"Create File"** action (OneDrive connector).
-2. Set the destination folder and filename (ending in `.pdf`).
+2. Set the folder path and filename (ending in `.pdf`).
 3. Map **File Content** from the deliverable.
 
     ![Save file](/images/powerautomate/forms-flow/save-file.png)

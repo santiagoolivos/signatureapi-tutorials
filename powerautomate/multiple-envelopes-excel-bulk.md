@@ -204,9 +204,9 @@ Now, attach your contract template to the envelope and populate it with proposal
 Specify where the client should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Set the **Document ID** from the dynamic content.
+2. Set the **Document ID** using dynamic content.
 3. Use the placeholder (e.g., `[[client_signature]]`) from your DOCX template.
-4. Set the **Recipient Key** from the dynamic content.
+4. Set the **Recipient Key** using dynamic content.
 
     ![Add signature](/images/powerautomate/excel-flow/add-signature.png)
 
@@ -216,7 +216,7 @@ Specify where the client should sign on the document.
 Trigger the sending of your envelope to the client for signing.
 
 1. Add **"Start Envelope"** action from the SignatureAPI connector.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Select the appropriate **Envelope ID** using dynamic content.
 3. Save the flow.
 
     ![Start envelope](/images/powerautomate/excel-flow/start-envelope.png)
@@ -245,7 +245,7 @@ Now, create a new **"Automated cloud flow"** to monitor the signing process.
 Retrieve the signed contract from the SignatureAPI.
 
 1. Add **"Get a Deliverable"** action from the SignatureAPI connector.
-2. Select the correct **Deliverable ID** from dynamic content.
+2. Select the correct **Deliverable ID** using dynamic content.
 
     ![Get deliverable](/images/powerautomate/excel-flow/get-deliverable.png)
 

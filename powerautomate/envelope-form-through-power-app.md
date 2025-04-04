@@ -171,9 +171,9 @@ Now, attach your contract template to the envelope and populate it with customer
 Specify where the customer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Set the **Document ID** from the dynamic content.
+2. Set the **Document ID** using dynamic content.
 3. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
-4. Set the **Recipient Key** from the dynamic content.
+4. Set the **Recipient Key** using dynamic content.
 
     ![Add signature](/images/powerapps/add-signature.png)
 
@@ -182,7 +182,7 @@ Specify where the customer should sign on the document.
 Trigger the sending of your envelope to the customer for signing.
 
 1. Add **"Start Envelope"** action.
-2. Select the appropriate **Envelope ID** from dynamic content.
+2. Select the appropriate **Envelope ID** using dynamic content.
 
     ![Start envelope](/images/powerapps/start-envelope.png)
 
@@ -195,7 +195,7 @@ Next, configure your flow to wait for the signing to complete, retrieve the sign
 Pause the flow until the customer signs the contract.
 
 1. Add **"Wait for Envelope Completion"** action.
-2. Select the correct **Envelope ID**.
+2. Select the correct **Envelope ID** using dynamic content.
 
     ![Wait for envelope](/images/powerapps/wait-envelope.png)
 
@@ -204,7 +204,7 @@ Pause the flow until the customer signs the contract.
 Once signed, automatically retrieve the completed document.
 
 1. Add **"Get Deliverables"** action.
-2. Select the correct **Deliverable ID** from dynamic content.
+2. Select the correct **Deliverable ID** using dynamic content.
 
     ![Get deliverable](/images/powerapps/get-deliverable.png)
 

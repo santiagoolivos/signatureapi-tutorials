@@ -179,9 +179,9 @@ Now, attach your contract template to the envelope and populate it with customer
 Specify where the customer should sign on the document.
 
 1. Add **"Add a Place – Signature"** action.
-2. Set the **Document ID** from the dynamic content.
+2. Set the **Document ID** using the dynamic content.
 3. Use the placeholder (e.g., `[[customer_signature]]`) from your DOCX template.
-4. Set the **Recipient Key** from the dynamic content.
+4. Set the **Recipient Key** using the dynamic content.
 
     ![Add Place](/images/powerpages/add-signature.png)
 
@@ -190,7 +190,7 @@ Specify where the customer should sign on the document.
 Trigger the sending of your envelope to the customer for signing.
 
 1. Add **"Start Envelope"** action.
-2. Set the **Envelope ID** from the dynamic content.
+2. Set the **Envelope ID** using the dynamic content.
 
     ![Start Envelope](/images/powerpages/start-envelope.png)
 
@@ -200,7 +200,7 @@ Trigger the sending of your envelope to the customer for signing.
 Create the ceremony for the customer with custom authentication. This will return an URL that will be used to embed the ceremony in the Power Pages.
 
 1. Add **"Create Ceremony - Custom authentication"** action from the SignatureAPI connector.
-2. Set the **"Recipient ID"** form the dynamic content.
+2. Set the **"Recipient ID"** using dynamic content.
 3. Set the **"Authentication Provider"** to what you want to use. This field will be used in the Audit Log of the Deliverable as the security provider for that custom ceremony.
 4. Set the **"Authentication Data"** to the data you want to use to verify the user and authentication provider. This will be used in the Audit Log as a security provider data.
     
@@ -217,7 +217,7 @@ Create the ceremony for the customer with custom authentication. This will retur
 
 1. Add an output of type **"Text"**.
 2. Set the **"Name"** to the name of the variable you want to return (e.g. url).
-3. Set the **"Value"** to the URL of the ceremony from the **Create Ceremony - Custom authentication** action from the dynamic content.
+3. Set the **"Value"** to the URL of the ceremony from the **Create Ceremony - Custom authentication** action using dynamic content.
 
 ![Return Ceremony](/images/powerpages/return-ceremony.png)
 
