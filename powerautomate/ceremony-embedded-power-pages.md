@@ -46,7 +46,7 @@ The automation process follows these steps:
 3. **Signature Process:** Create an envelope via SignatureAPI, add recipient details, and attach the DOCX.
 4. **Create a Ceremony:** Create and return the ceremony to be embedded in the Power Pages form.
 
-Here’s what your final Power Automate flow will look like:
+Here’s what your final Power Automate flow will look like ( Notice that the flow is created from Power Pages, but you can see that the flow is created from the Power Automate website):
 
 ![Flow](/images/powerpages/complete-flow.png)
 
